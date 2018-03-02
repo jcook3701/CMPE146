@@ -18,7 +18,7 @@ public:
     };
 
     /// Nothing needs to be done within the default constructor
-    PWMDriver() {}
+    PWMDriver() {};
 
     /**
 	 * 1) Select PWM functionality on all PWM-able pins.

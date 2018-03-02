@@ -19,7 +19,7 @@ void ADCDriver::adcInitBurstMode()
 	// Bits 25:24 configure the peripheral clock spd for ADCdriver
 	// 25:24 = 01 -> CLK/1
 	LPC_SC->PCLKSEL0 |= (0 << 25);
-	LPC_SC->PCLKSEL0 |= (1 << 25);
+	LPC_SC->PCLKSEL0 |= (1 << 24);
 
 	// Enable burst mode
 	LPC_ADC->ADCR |= (1 << burst_mode_pin);
@@ -64,7 +64,7 @@ void ADCDriver::adcSelectPin(ADCDriver::ADC_PIN adc_pin_arg)
 	}
 }
 
-uint16_t ADCDriver::readADCVoltageByChannel(uint8_t adc_channel_arg)
+float ADCDriver::readADCVoltageByChannel(uint8_t adc_channel_arg)
 {
 	// 15:4 = 12bit adc reading
 	uint16_t raw_value;
@@ -108,6 +108,11 @@ uint16_t ADCDriver::readADCVoltageByChannel(uint8_t adc_channel_arg)
 		break;
 	}
 
-	// Shift 15:4 to 11:0
-	return raw_value >> 4;
+	// Shift 15:4 to 11:0 for the 12 bit value
+	const uint16_t shifted = raw_value >> 4;
+
+	// Put the return value in a range of 0 to 1
+	// 2^12 = 4096
+	const float ret_val = shifted / 4096.0;
+	return ret_val;
 }
