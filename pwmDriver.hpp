@@ -2,7 +2,8 @@
 #define PWM_DRIVER_H_
 
 #include "stdint.h"
-  
+#include "LPC17xx.h"
+
 class PWMDriver
 {
 public:
