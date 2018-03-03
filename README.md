@@ -11,21 +11,30 @@ make template
 ```
 
 Environment Variable Template: 
-- Set var USER_DRIVER_DIR to the full path of the loaction where you would like your new soft-link to be created
+- Set var USER_DRIVER_DIR to the full path of the loaction where you would like your new sym-link to be created.
 ```
 #rules.sh environment variable template file
 
 USER_DRIVER_DIR=
 ```
 
-Step 2) 
+Step 2) Create your sym-links either from the standard rules.sh file or with a custom configuration file. 
 ```
 make build_links
 or
 make build_links IMPORT_FILE= #FILE
 ```
 
-Optional Commands: 
+## Delete Links
+- Deleting a link is a simple as using the build_links command.
+```
+make destroy
+or
+make destroy IMPORT_FILE= #FILE
+```
+
+## Help
+- For a quick reference of the basic functionality of this tool please use the help command. 
 ```
 make help
 ```
@@ -46,8 +55,4 @@ make help
 |  For further information reference the README.md file located in this project.            |
 ---------------------------------------------------------------------------------------------
 ```
-```
-make destroy
-```
-
 
