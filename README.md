@@ -11,12 +11,13 @@ make template
 ```
 
 Environment Variable Template: 
-- Set var USER_DRIVER_DIR to the full path of the loaction where you would like your new sym-link to be created.
 ```
 #rules.sh environment variable template file
 
 USER_DRIVER_DIR=
 ```
+- Set var USER_DRIVER_DIR to the full path of the loaction where you would like your new sym-link to be created.
+
 
 Step 2) Create your sym-links either from the standard rules.sh file or with a custom configuration file. 
 ```
