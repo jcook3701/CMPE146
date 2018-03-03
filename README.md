@@ -10,7 +10,7 @@ Step 1) Create your template that will hold environmental variables needed for t
 make template
 ```
 
-Environment Variable Template: 
+Environment Variable Template: (Generated)
 ```
 #rules.sh environment variable template file
 
