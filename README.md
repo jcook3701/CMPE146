@@ -13,6 +13,7 @@ make template IMPORT_FILE= #File
 Environment Variable Template: (Generated)
 ```
 #rules.sh environment variable template file
+#Do not include any ("quotation marks") in this file
 
 USER_DRIVER_DIR=
 ```
@@ -44,12 +45,10 @@ make help
 |  1. template:                                                                             |
 |    - Generates a template for environment variables that are used in this makefile.       |
 |    - Default name for file is rules.sh                                                    |
-|  2. test:                                                                                 |
-|    - Used for the development of this makefile.                                           |
-|  3. build:                                                                                |
+|  2. build:                                                                                |
 |    - Creates soft-links using user_driver_dir as a target and drivers from this git       |
 |      repo as a sourse.                                                                    |
-|  4. destroy:                                                                              |
+|  3. destroy:                                                                              |
 |    - Destroys soft-links from this git project. Specificity for the template activly      |
 |      currently enabled.                                                                   |
 |                                                                                           |
