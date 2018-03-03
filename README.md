@@ -5,3 +5,11 @@
 ## Getting Started
 
 1)
+
+---
+make template
+---
+
+---
+make build_links
+---
