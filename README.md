@@ -6,6 +6,8 @@ Step 1) Create your template that will hold environmental variables needed for t
 
 ```
 make template
+or
+make template IMPORT_FILE= #File
 ```
 
 Environment Variable Template: (Generated)
