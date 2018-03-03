@@ -1,5 +1,4 @@
-# CMPE146
-- good lab good times good dudes
+# CMPE146 - good lab good times good dudes
 
 ## Getting Started
 
