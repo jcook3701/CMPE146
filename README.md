@@ -11,10 +11,11 @@ make template
 ```
 
 Environment Variable Template: 
+- Set var USER_DRIVER_DIR to the full path of the loaction where you would like your new soft-link to be created
 ```
 #rules.sh environment variable template file
 
-USER_DRIVER_DIR="test"
+USER_DRIVER_DIR=
 ```
 
 Step 2) 
