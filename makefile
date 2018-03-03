@@ -44,7 +44,7 @@ help:
 template:
 	$V touch $(IMPORT_FILE)
 	$V echo "#$(IMPORT_FILE) environment variable template file">$(IMPORT_FILE)
-	$V echo "#Do not include any (\") in this file"            >>$(IMPORT_FILE)
+	$V echo "#Do not include any (\"quotation marks\") in this file"            >>$(IMPORT_FILE)
 	$V echo ""                >> $(IMPORT_FILE)
 	$V echo "USER_DRIVER_DIR=">> $(IMPORT_FILE)
 
