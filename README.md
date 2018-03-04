@@ -46,6 +46,7 @@ Environment Variable Template: (Generated from command in Step 2)
 #Do not include any ("quotation marks") in this file
 
 USER_DRIVER_DIR=
+USER_MAIN_DIR=
 ```
 - Set var USER_DRIVER_DIR to the full path of the loaction where you would like your new sym-link to be created. (Mine is set to dir 'jared_lib' as seen bellow).
 - Set var USER_MAIN_DIR to the full path of the location where where you main is stored on the class project. 'https://github.com/kammce/SJSU-Dev/firmware/HelloWorld/L5_Application/' 
