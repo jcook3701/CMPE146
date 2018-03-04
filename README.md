@@ -17,17 +17,6 @@ or
 make build_links IMPORT_FILE= #FILE
 ```
 
-Environment Variable Template: (Generated from above command)
-```
-#rules.sh environment variable template file
-#Do not include any ("quotation marks") in this file
-
-USER_DRIVER_DIR=
-```
-- Set var USER_DRIVER_DIR to the full path of the loaction where you would like your new sym-link to be created. (Mine is set to dir 'jared_lib' as seen bellow).
-- Set var USER_MAIN_DIR to the full path of the location where where you main is stored on the class project. 'https://github.com/kammce/SJSU-Dev/firmware/HelloWorld/L5_Application/' 
-
-
 Step 3) Edit makefile from https://github.com/kammce/SJSU-Dev
 - I added the following 'jared_lib' to my 'https://github.com/kammce/SJSU-Dev/firmware/lib/ folder'. 
 
@@ -50,6 +39,16 @@ CFLAGS = -mcpu=cortex-m3 \
 ```
 
 Step 4) Fill out your 'rules.sh' file
+
+Environment Variable Template: (Generated from command in Step 2)
+```
+#rules.sh environment variable template file
+#Do not include any ("quotation marks") in this file
+
+USER_DRIVER_DIR=
+```
+- Set var USER_DRIVER_DIR to the full path of the loaction where you would like your new sym-link to be created. (Mine is set to dir 'jared_lib' as seen bellow).
+- Set var USER_MAIN_DIR to the full path of the location where where you main is stored on the class project. 'https://github.com/kammce/SJSU-Dev/firmware/HelloWorld/L5_Application/' 
 
 
 ## Delete Links
