@@ -3,7 +3,7 @@
 
 #include "LPC17xx.h"
 #include "lpc_isr.h"
-#include "LabGPIO_struct.hpp"
+#include "gpioStruct.hpp"
 
 #define data_width 32
 

@@ -1,4 +1,4 @@
-#include "LabGPIO.hpp"
+#include "gpioDriver.hpp"
 #include <stdio.h>
 
 LabGPIO::LabGPIO(uint8_t my_port, uint8_t my_pin){
