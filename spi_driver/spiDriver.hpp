@@ -7,12 +7,26 @@ class LabSPI
 {
 private:
   // SSP register lookup table structure
-  const LPC_SSP_TypeDef * SSP[2] = {LPC_SSP0, LPC_SSP1};
+
+  //LPC_SSP_TypeDef original_ssp[2] = {LPC_SSP0, LPC_SSP1};
+  LPC_SSP_TypeDef * SSP[2] = {LPC_SSP0, LPC_SSP1}; 
+  uint8_t current_ssp = 0; 
   
 public:
   enum FrameModes
     {
       /* Fill this out based on the datasheet. */
+      SPI       = 0,
+      TI        = 1,
+      Microwire = 2
+      //MODE0 - CPOL: 0 | CPHA: 0
+      //MODE1 - CPOL: 0 | CPHA: 1
+      //MODE2 - CPOL: 1 | CPHA: 0
+      //MODE3 - CPOL: 1 | CPHA: 1
+      //      MODE0,
+      //      MODE1,
+      //      MODE2,
+      //      MODE3
     };
   
   enum Peripheral

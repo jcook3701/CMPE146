@@ -1,117 +1,112 @@
 #include "FreeRTOS.h"
 #include "tasks.hpp"
-#include "uart0_min.h"
-#include "stdio.h"
 #include "LPC17xx.h"
+#include "stdio.h"
+#include "printf_lib.h"
 
-#include "adcDriver.hpp"
-#include "pwmDriver.hpp"
+
+#include "gpioStruct.hpp"
+#include "gpioDriver.hpp"
+#include "spiDriver.hpp"
 
 
-const uint32_t ONE_SECOND = 1000;
+//Data Sizes
+const uint8_t four_bit      = 0x3;
+const uint8_t five_bit      = 0x4;
+const uint8_t six_bit       = 0x5;
+const uint8_t seven_bit     = 0x6;
+const uint8_t eight_bit     = 0x7;
+const uint8_t nine_bit      = 0x8;
+const uint8_t ten_bit       = 0x9;
+const uint8_t eleven_bit    = 0xA;
+const uint8_t twelve_bit    = 0xB;
+const uint8_t thirteen_bit  = 0xC;
+const uint8_t fourteen_bit  = 0xD;
+const uint8_t fifteen_bit   = 0xE;
+const uint8_t sixteen_bit   = 0xF;
 
-float adc_reading;
-float red_duty_cycle;
-float blue_duty_cycle;
-float green_duty_cycle;
 
-void logVoltage( void* pvParameters )
-{
-	static char buffer[32];
-	while(1)
-	{
-		const float voltage_percent = adc_reading;
-		snprintf(buffer, 32, "Voltage: %fV", voltage_percent * 3.3);	
-		uart0_puts(buffer);
-		vTaskDelay(ONE_SECOND);
-	}
+bool active_flag0 = false; 
+
+void cs(void){
+  
 }
 
-void logDuty( void* pvParameters )
-{
-	static char buffer[64];
-	while(1)
-	{
-		const float red   = red_duty_cycle;
-		const float blue  = blue_duty_cycle;
-		const float green = green_duty_cycle;
-		
-		snprintf(buffer, 64, "Duty: (%f, %f, %f)", red, green, blue);	
-		uart0_puts(buffer);
-		vTaskDelay(ONE_SECOND);
-	}
+void ds(void){
+  
 }
 
-void setColors( void* pvParameters )
+void task_sig_reader(void *p)
 {
-	static PWMDriver pwm_driver;
+  /* Get Parameter */
+  //uint32_t param = (uint32_t)(pvParameters);
+  GPIO_SPI_Package *package;
+  package = (GPIO_SPI_Package*) p;
+  
+  while (1)
+  {
 
-	// Use these PWM pins
-	pwm_driver.pwmSelectPin(PWMDriver::PWM_PIN_2_1); // Red
-	pwm_driver.pwmSelectPin(PWMDriver::PWM_PIN_2_3); // Green
-	pwm_driver.pwmSelectPin(PWMDriver::PWM_PIN_2_4); // Blue
+    // Note that we may get interrupted here and the other task may corrupt our transfer
+    package->gpio_object->setLow();
+    char s1 = package->spi_object->transfer(0x9F); // FIXME: This is not the real command to read signature
+    char s2 = package->spi_object->transfer(0x00);
+    char s3 = package->spi_object->transfer(0x00);
+    package->gpio_object->setHigh();
+    u0_dbg_printf("Manufacturer ID: %x\n", s2);
+    u0_dbg_printf("Device ID: %x\n", s3);
 
-	// 1000 Hz
-	pwm_driver.pwmInitSingleEdgeMode(1000);
-	
-	while(1)
-	{
-		// Adapted from https://www.arduino.cc/en/Tutorial/ColorMixer
-		if (adc_reading <= 0.33)
-		{
-			const float normalized = (adc_reading * 3);
-			red_duty_cycle   = 1.0 - normalized;
-			green_duty_cycle = normalized;
-			blue_duty_cycle  = 1.0;
-		}
-		else if(adc_reading <= 0.66) 
-		{
-			const float normalized = ((adc_reading - 0.33) * 3);
-			red_duty_cycle   = normalized;
-			green_duty_cycle = 1.0;
-			blue_duty_cycle  = 1.0 - normalized;
-		}
-		else
-		{
-			const float normalized = ((adc_reading - 0.67) * 3);
-			red_duty_cycle = 1.0;
-			green_duty_cycle = 1.0 - normalized;
-			blue_duty_cycle = normalized;
-		}
-
-		
-		pwm_driver.setDutyCycle(PWMDriver::PWM_PIN_2_1, red_duty_cycle);
-		pwm_driver.setDutyCycle(PWMDriver::PWM_PIN_2_3, green_duty_cycle);
-		pwm_driver.setDutyCycle(PWMDriver::PWM_PIN_2_4, blue_duty_cycle);
+    /*
+    if (s1 != expected1 || s2 != expected2) {
+      puts("Ooops... race condition");
+      vTaskSuspend(NULL); // Suspend this task
     }
+    */
+    vTaskDelay(1);
+  }
 }
 
-
-void readADC(void * pvParameters)
+void task_page_reader(void *p)
 {
-	const uint8_t channel = 3;
-	static ADCDriver adc_driver;
-	
-	adc_driver.adcInitBurstMode();
-	adc_driver.adcSelectPin(ADCDriver::ADC_PIN_0_26);
-	
-	while(1)
-	{
-		adc_reading = adc_driver.readADCVoltageByChannel(channel);
-    }
+  while (1)
+  {
+    cs();
+    //read_512_byte_page();
+    ds();
+    vTaskDelay(1);
+  }
 }
 
 int main(int argc, char const *argv[])
 {
-	scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+  const uint32_t STACK_SIZE = 1024;
+  const uint8_t port = 0;
+  const uint8_t pin = 0; 
 
-	xTaskCreate(logVoltage, "VLOG", 512, (void*) 1, 1, NULL );
-	xTaskCreate(logDuty, "DLOG", 512, (void*) 1, 1, NULL );
-	xTaskCreate(readADC, "ADC", 512, (void * ) 1, 1, NULL );
-	xTaskCreate(setColors, "PWM", 512, (void*) 1, 1, NULL );
 
-	// Start Scheduler
-	vTaskStartScheduler();
+  // Declare SSP1
+  LabSPI *mySSP1 = new LabSPI();
+  mySSP1->init(mySSP1->SSP0, sixteen_bit , mySSP1->SPI, 8);
+  u0_dbg_printf("SSPI: %i, FORMAT: %i\n", mySSP1->SSP1, mySSP1->SPI);
+  
+  // Declare GPIO
+  LabGPIO *myGPIO_0_6 = new LabGPIO(port, pin);
+  myGPIO_0_6->setAsOutput();
+  
+  // Declare Package
+  GPIO_SPI_Package * chip_select = new GPIO_SPI_Package; 
+  
+  /* Initialization Code */
+  //----------------internal GPIO, SSP1---------------------//
+  chip_select->globalVar = &active_flag0;
+  chip_select->spi_object = mySSP1;
+  chip_select->gpio_object = myGPIO_0_6; 
 
-	return -1;
+
+  xTaskCreate(task_sig_reader, "sig_reader", STACK_SIZE, (void *)chip_select, 1, NULL );
+  //xTaskCreate(task_page_reader, "page_reader", STACK_SIZE, (void *)chip_select, 1, NULL );
+
+  // Start Scheduler
+  vTaskStartScheduler();
+
+  return -1;
 }
