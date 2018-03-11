@@ -146,10 +146,11 @@ uint8_t LabSPI::transfer(uint8_t send)
 {
 
   //SSP[this->current_ssp]->DR &= ~(0xFF << 0);
-  SSP[this->current_ssp]->DR |= (send << 0);
-  while(!SSP[this->current_ssp]->SR & (1 << 4)){}
+  //what is the difference between (SSP[this->current_ssp]->DR = send; &   SSP[this->current_ssp]->DR |= (send << 0); )
+  SSP[this->current_ssp]->DR = send;
+  while(SSP[this->current_ssp]->SR & (1 << 4)){}
   return SSP[this->current_ssp]->DR;
-
+  
   //  SSP[this->current_ssp]->DR |= (send << 0);
   //  while(SSP[this->current_ssp]->SR & (1 << 4)){
   //    return SSP[this->current_ssp]->DR;
