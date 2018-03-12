@@ -66,7 +66,7 @@ bool LabSPI::init(Peripheral peripheral, uint8_t data_size_select, FrameModes fo
 	break;
       case SSP1:
 	// Turn on the SSP1 peripheral
-	LPC_SC->PCONP |= (1 << ssp1_bit);
+	LPC_SC->PCONP |= (0x1 << ssp1_bit);
 	// Reset the peripheral clock
 	LPC_SC->PCLKSEL0 &= ~(0x3 << ssp1_clk);
 	// Set up the clock
@@ -101,10 +101,7 @@ bool LabSPI::init(Peripheral peripheral, uint8_t data_size_select, FrameModes fo
     //Frame Format - pins 5:4
     SSP[peripheral]->CR0 &=  ~(0x3 << frame_format);  //Clear - or set to 00 (SPI)
     SSP[peripheral]->CR0 |=  (format << frame_format);  //Clear - or set to 00 (SPI)
-    //SSPn Clock Prescale Register
-    SSP[peripheral]->CPSR &= ~(0x7F << clock_prescale_register);
-    SSP[peripheral]->CPSR |=  (divide << clock_prescale_register);
-
+    
     const uint8_t lbm = 0;
     const uint8_t sse = 1;
     const uint8_t ms  = 2;
@@ -114,6 +111,11 @@ bool LabSPI::init(Peripheral peripheral, uint8_t data_size_select, FrameModes fo
     SSP[peripheral]->CR1 &= ~(0x1 << sse);  //Clears bit
     SSP[peripheral]->CR1 |=  (0x1 << sse);  //Sets to 1
     SSP[peripheral]->CR1 &= ~(0x1 << ms);   //Sets to 0
+
+    //SSPn Clock Prescale Register
+    SSP[peripheral]->CPSR &= ~(0x7F << clock_prescale_register);
+    SSP[peripheral]->CPSR |=  (divide << clock_prescale_register);
+
     
     //MODE
     /*
@@ -149,7 +151,7 @@ uint8_t LabSPI::transfer(uint8_t send)
   //what is the difference between (SSP[this->current_ssp]->DR = send; &   SSP[this->current_ssp]->DR |= (send << 0); )
   SSP[this->current_ssp]->DR = send;
   while(SSP[this->current_ssp]->SR & (1 << 4)){}
-  return SSP[this->current_ssp]->DR;
+  return (SSP[this->current_ssp]->DR);
   
   //  SSP[this->current_ssp]->DR |= (send << 0);
   //  while(SSP[this->current_ssp]->SR & (1 << 4)){
