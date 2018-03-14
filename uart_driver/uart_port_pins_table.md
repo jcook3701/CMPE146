@@ -3,7 +3,7 @@
 
 
 Port/Pin | UART | function 
-
+---|---|---
 P0.0 | UART-3 Tx | 10
 P0.1 | UART-3 Rx | 10
 
