@@ -51,7 +51,7 @@ void task_sig_reader(void *p)
       u0_dbg_printf("Manufacturer ID: %x\n", s2);
       u0_dbg_printf("Device ID: %x\n", s3);
     }
-    //vTaskDelay(1);
+    vTaskDelay(1);
   }
 }
 
@@ -60,7 +60,7 @@ void task_page_reader(void *p)
   GPIO_SPI_Package *package;
   package = (GPIO_SPI_Package*) p;
 
-  uint8_t page_size = 5; 
+  uint8_t page_size = 512; 
   uint8_t read_page[page_size]; 
   while (1)
   {
@@ -79,7 +79,7 @@ void task_page_reader(void *p)
     }
     package->gpio_object->setHigh();
     for(int i = 0; i < page_size; i++){
-      u0_dbg_printf("page read %x\n", read_page[i]);
+      u0_dbg_printf("page read %i: %x\n",i, read_page[i]);
     }
     vTaskDelay(1);
   }
