@@ -2,7 +2,7 @@
 
 ## Available Pins
 Port/Pin | UART | Select Register | Function 
----|---|---|---
+------|-----------|----------|----
 P0.0  | UART-3 Tx | PINSEL 0 | 10
 P0.1  | UART-3 Rx | PINSEL 0 | 10
 P2.0  | UART-1 Tx | PINSEL 4 | 10
