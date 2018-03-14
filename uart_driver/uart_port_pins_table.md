@@ -14,7 +14,7 @@ P4.29 | UART-3 Rx | PINSEL 9 | 11
 
 ## Non-available Pins
 Port/Pin | UART | Select Register | Function | Why
----|---|---|---
+---|---|---|---|---
 P0.2 | UART-1 Tx | PINSEL 0 | 01 | FT323 TXD0
 P0.3 | UART-1 Rx | PINSEL 0 | 01 | FT232 RXD0
 P0.10 | UART-2 Tx | PINSEL 0 | 01 | SDA2
