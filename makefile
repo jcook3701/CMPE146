@@ -34,6 +34,7 @@ SPI:=  spi_driver
 GPIO:= gpio_driver
 EINT:= eint_driver
 UART:= uart_driver
+I2C:= i2c_driver
 
 .PHONY: help template test_env test build destroy
 
@@ -84,6 +85,8 @@ endif
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(EINT)" ] || (ln -s $(PWD)/$(EINT)/eint* $(USER_DRIVER_DIR)/$(EINT))
 	$V [ -d "$(USER_DRIVER_DIR)/$(UART)" ] || (mkdir $(USER_DRIVER_DIR)/$(UART))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(UART)" ] || (ln -s $(PWD)/$(UART)/uart* $(USER_DRIVER_DIR)/$(UART))
+	$V [ -d "$(USER_DRIVER_DIR)/$(I2C)" ] || (mkdir $(USER_DRIVER_DIR)/$(I2C))
+	$V [ ! -d "$(USER_DRIVER_DIR)/$(I2C)" ] || (ln -s $(PWD)/$(I2C)/i2c* $(USER_DRIVER_DIR)/$(I2C))
 
 # Will destroy links for user from the path specified in generated template file specified in $(IMPORT_FILE).
 # If you want it to be easy to destroy links don't delete template files after creation.  Keep them and generate new templates
@@ -99,6 +102,7 @@ endif
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(GPIO)" ] || (rm -r $(USER_DRIVER_DIR)/$(GPIO))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(EINT)" ] || (rm -r $(USER_DRIVER_DIR)/$(EINT))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(UART)" ] || (rm -r $(USER_DRIVER_DIR)/$(UART))
+	$V [ ! -d "$(USER_DRIVER_DIR)/$(I2C)" ] || (rm -r $(USER_DRIVER_DIR)/$(I2C))
 
 link_main:
 ifeq ($(FILE_SET),0)
