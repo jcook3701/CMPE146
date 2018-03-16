@@ -10,7 +10,6 @@
 LabUART UART2;
 
 QueueHandle_t charQueue;
-QueueHandle_t answerQueue;
 
 void print_char(void* pvparams)
 {
@@ -57,8 +56,6 @@ void read_char(void* pvparams)
 	char c;
 	int i= 0;
 	char input[3] = { 0 };
-
-	char temp = '9';
 	int answer;
 	
 	while(1)
@@ -72,21 +69,21 @@ void read_char(void* pvparams)
 			if(i == 3)
 			{
 				answer = make_result(input);
-				printf("%d\n", answer);
+				UART2.transmit(answer + '0');
 				i = 0;
 			}
 		}
 	}
 }
 
-void print_answers(void* pvparams)
+void print_answer(void* pvparams)
 {
-	char c;		
+	char c;	
 	while(1)
 	{
-		if(xQueueReceive(answerQueue, &c, 1000))
+		if(xQueueReceive(charQueue, &c, 1000))
 		{
-			uart0_putchar(c);		
+			printf("Sender received: %c\n", c);
 		}
 	}
 }
@@ -106,12 +103,12 @@ int main(int argc, char const *argv[])
 	NVIC_EnableIRQ(UART2_IRQn);
 
 	charQueue = xQueueCreate(100, sizeof(char));
-	answerQueue = xQueueCreate(100, sizeof(char));
 	
 	scheduler_add_task(new terminalTask(PRIORITY_HIGH));
 	xTaskCreate(print_char, "print_char", 512, (void*) 1, 1, NULL );
+	xTaskCreate(print_answer, "answer", 512, (void*) 1, 1, NULL );
 	xTaskCreate(read_char, "read_char", 512, (void*) 1, 1, NULL);
-	xTaskCreate(print_answers, "print_ans", 512, (void*) 1, 1, NULL);
+
 
 
 	scheduler_start();
