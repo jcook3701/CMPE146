@@ -4,8 +4,7 @@
 #include "stdio.h"
 #include "LPC17xx.h"
 
-#include "LabGPIO_G.hpp"
-#include "UART.hpp"
+#include "uartDriver.hpp"
 
 LabUART UART2;
 

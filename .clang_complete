@@ -8,6 +8,8 @@
 -I/Users/jared3701/Documents/College/5th_year/CMPE_146/SJSU_Dev_mac/SJSU-Dev/firmware/lib/jared_lib/eint_driver
 -I/Users/jared3701/Documents/College/5th_year/CMPE_146/SJSU_Dev_mac/SJSU-Dev/firmware/lib/jared_lib/gpio_driver
 -I/Users/jared3701/Documents/College/5th_year/CMPE_146/SJSU_Dev_mac/SJSU-Dev/firmware/lib/jared_lib/spi_driver
+-I/Users/jared3701/Documents/College/5th_year/CMPE_146/SJSU_Dev_mac/SJSU-Dev/firmware/lib/jared_lib/uart_driver
+
 -I/Users/jared3701/Documents/College/5th_year/CMPE_146/labs/lab4/CMPE146
 
 -I/Users/jared3701/Documents/College/5th_year/CMPE_146/SJSU_Dev_mac/SJSU-Dev/firmware/lib/L0_LowLevel
