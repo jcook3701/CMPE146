@@ -13,7 +13,7 @@ QueueHandle_t charQueue;
 #define ALU 1
 
 
-void print_name(void* pvparams)
+void print_char(void* pvparams)
 {
 	char i = 0;
 	
@@ -21,11 +21,11 @@ void print_name(void* pvparams)
 	{	
 		UART2.transmit('!');
 		i++;
-		//vTaskDelay(100);
+		vTaskDelay(100);
 	}
 }
 
-void read_name(void* pvparams)
+void read_char(void* pvparams)
 {
 	char x;
 	
@@ -45,11 +45,13 @@ int main(int argc, char const *argv[])
 
 	if(ALU)
 	{
-		xTaskCreate(print_name, "print_name", 512, (void*) 1, 1, NULL );
+		printf("Printing characters: ");
+		xTaskCreate(print_char, "print_char", 512, (void*) 1, 1, NULL );
 	}
 	else
 	{
-		xTaskCreate(read_name, "send_name", 512, (void*) 1, 1, NULL);
+		printf("Reading characters: ");
+		xTaskCreate(read_char, "read_char", 512, (void*) 1, 1, NULL);
 	}
 
 	scheduler_start();
