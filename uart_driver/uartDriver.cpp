@@ -1,5 +1,6 @@
 #include "uartDriver.hpp"
 #include "LPC17xx.h"
+#include "lpc_isr.h"
 
 LabUART::LabUART() {}
 LabUART::~LabUART() {}
@@ -11,6 +12,7 @@ void LabUART::init(void)
 	const uint8_t TX_BIT = 17;
 	const uint8_t RX_BIT = 19;
 	const uint8_t DLAB_UART2_BIT = 7;
+	const uint8_t RX_INTERRUPT_BIT = 0;
 
 	// Enable UART2 Peripheral
 	LPC_SC->PCONP |= (1 << PCONP_UART2_PIN);
@@ -34,6 +36,9 @@ void LabUART::init(void)
 	
 	// Disable DLAB for UART2 to prevent baud rate change
 	LPC_UART2->LCR &= ~(1 << DLAB_UART2_BIT);
+
+	// Enable interrupts on RX
+	LPC_UART2->IER |= (1 << RX_INTERRUPT_BIT);
 }
 
 
