@@ -20,7 +20,15 @@ void print_char(void* pvparams)
 		UART2.transmit('5');
 		UART2.transmit('4');
 		UART2.transmit('+');
-		vTaskDelay(10000);
+
+		UART2.transmit('7');
+		UART2.transmit('6');
+		UART2.transmit('-');
+
+		UART2.transmit('9');
+		UART2.transmit('9');
+		UART2.transmit('*');
+		vTaskDelay(2000);
 	}
 }
 
@@ -54,9 +62,11 @@ uint8_t make_result(char* buffer)
 void read_char(void* pvparams)
 {
 	char c;
-	int i= 0;
+	int i = 0;
 	char input[3] = { 0 };
-	int answer;
+	char buf[2] = { 0 };
+	uint8_t answer;
+	
 	
 	while(1)
 	{
@@ -68,8 +78,9 @@ void read_char(void* pvparams)
 			
 			if(i == 3)
 			{
-				answer = make_result(input);
-				UART2.transmit(answer + '0');
+				answer = make_result(input);							
+				UART2.transmit((char) answer);			
+				printf("Sending back: %c %c %c = %d\n", input[0], input[2], input[1], answer);
 				i = 0;
 			}
 		}
@@ -83,7 +94,7 @@ void print_answer(void* pvparams)
 	{
 		if(xQueueReceive(charQueue, &c, 1000))
 		{
-			printf("Sender received: %c\n", c);
+			printf("Sender received: %d\n", (uint8_t) c);
 		}
 	}
 }
@@ -105,11 +116,9 @@ int main(int argc, char const *argv[])
 	charQueue = xQueueCreate(100, sizeof(char));
 	
 	scheduler_add_task(new terminalTask(PRIORITY_HIGH));
-	xTaskCreate(print_char, "print_char", 512, (void*) 1, 1, NULL );
-	xTaskCreate(print_answer, "answer", 512, (void*) 1, 1, NULL );
+	//xTaskCreate(print_char, "print_char", 512, (void*) 1, 1, NULL );
+	//xTaskCreate(print_answer, "answer", 512, (void*) 1, 1, NULL );
 	xTaskCreate(read_char, "read_char", 512, (void*) 1, 1, NULL);
-
-
 
 	scheduler_start();
 	
