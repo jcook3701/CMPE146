@@ -53,7 +53,7 @@ char LabUART::receive(void)
 	char c;
 	
 	// Loop until all data is sent
-	while(LPC_UART2->LSR & (1 << DONE_BIT));
+	while(!(LPC_UART2->LSR & (1 << DONE_BIT)));
 
 	c = LPC_UART2->RBR;
 	return c;
