@@ -2,15 +2,15 @@
 
 ## Available Pins
 Port/Pin | UART | Select Register | Function 
-------|-----------|----------|----
-P0.0  | UART-3 Tx | PINSEL 0 | 10
-P0.1  | UART-3 Rx | PINSEL 0 | 10
-P2.0  | UART-1 Tx | PINSEL 4 | 10
-P2.1  | UART-1 Rx | PINSEL 4 | 10
-P2.8  | UART-2 Tx | PINSEL 4 | 10
-P2.9  | UART-2 Rx | PINSEL 4 | 10
-P4.28 | UART-3 Tx | PINSEL 9 | 11
-P4.29 | UART-3 Rx | PINSEL 9 | 11
+---|------|-----------|----------|----
+1:0 | P0.0  | UART-3 Tx | PINSEL 0 | 10
+3:2 | P0.1  | UART-3 Rx | PINSEL 0 | 10
+| P2.0  | UART-1 Tx | PINSEL 4 | 10
+| P2.1  | UART-1 Rx | PINSEL 4 | 10
+17:16 | P2.8  | UART-2 Tx | PINSEL 4 | 10
+19:18 | P2.9  | UART-2 Rx | PINSEL 4 | 10
+25:24 | P4.28 | UART-3 Tx | PINSEL 9 | 11
+27:26 | P4.29 | UART-3 Rx | PINSEL 9 | 11
 
 ## Non-available Pins
 Port/Pin | UART | Select Register | Function | Why
