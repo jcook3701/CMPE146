@@ -49,7 +49,7 @@ void LabUART::transmit(char c)
 
 char LabUART::receive(void)
 {
-	const uint8_t DONE_BIT = 6;
+	const uint8_t DONE_BIT = 0;
 	char c;
 	
 	// Loop until all data is sent

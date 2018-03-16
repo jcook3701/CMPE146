@@ -18,11 +18,10 @@ void print_name(void* pvparams)
 	char i = 0;
 	
 	while(1)
-	{
-	
-		UART2.transmit(i);
+	{	
+		UART2.transmit('!');
 		i++;
-		vTaskDelay(100);
+		//vTaskDelay(100);
 	}
 }
 
@@ -34,7 +33,7 @@ void read_name(void* pvparams)
 	{
 		x = UART2.receive();
 		printf("%c: %x\n", x, x);
-		vTaskDelay(100);
+		//vTaskDelay(100);
 	}
 }
 
@@ -44,15 +43,15 @@ int main(int argc, char const *argv[])
 	
 	scheduler_add_task(new terminalTask(PRIORITY_HIGH));
 
-	#if ALU
-	printf("ALU Task\n");
-	xTaskCreate(print_name, "print_name", 512, (void*) 1, 1, NULL );	
+	if(ALU)
+	{
+		xTaskCreate(print_name, "print_name", 512, (void*) 1, 1, NULL );
+	}
+	else
+	{
+		xTaskCreate(read_name, "send_name", 512, (void*) 1, 1, NULL);
+	}
 
-	#else
-	printf("Sender Task\n");
-	xTaskCreate(read_name, "send_name", 512, (void*) 1, 1, NULL);
-	#endif
-	
 	scheduler_start();
 	
 	return false;
