@@ -11,8 +11,8 @@ make template IMPORT_FILE= #File
 ```
 
 Step 2) Edit makefile from https://github.com/kammce/SJSU-Dev
-- I added the following 'jared_lib' to my 'https://github.com/kammce/SJSU-Dev/firmware/lib/ folder'. 
-- After I made the following edits to 'https://github.com/kammce/SJSU-Dev/makefile'.
+- I added the following 'jared_lib' to my 'https://github.com/kammce/SJSU-Dev/tree/master/firmware/lib'. 
+- After I made the following edits to 'https://github.com/kammce/SJSU-Dev/blob/master/makefile'.
 
 ```
 CFLAGS = -mcpu=cortex-m3 \
