@@ -82,6 +82,8 @@ make delete_main
 ## Help
 - For a quick reference of the basic functionality of this tool please use the help command. 
 ```
+make
+or
 make help
 ```
 ```
