@@ -24,7 +24,7 @@ endif
 # Verbose
 V         :=@
 
-# Local Git File
+# Local Git Main File
 MAIN      := main.cpp
 ADC_MAIN  := main_adc.cpp
 PWM_MAIN  := main_pwm.cpp
@@ -32,7 +32,8 @@ SPI_MAIN  := main_spi.cpp
 GPIO_MAIN := main_gpio.cpp
 EINT_MAIN := main_eint.cpp
 UART_MAIN := main_uart.cpp
-I2C       := main_i2c.cpp
+I2C_MAIN  := main_i2c.cpp
+PRODUCER_CONSUMER_MAIN := main_producer_consumer.cpp
 
 # Local Git Dirs
 ADC       := adc_driver
@@ -42,6 +43,8 @@ GPIO      := gpio_driver
 EINT      := eint_driver
 UART      := uart_driver
 I2C       := i2c_driver
+PRODUCER_CONSUMER := free_rtos_producer_consumer
+
 
 .PHONY: help template build destroy adc pwm spi gpio eint uart i2c delete_main test
 
@@ -177,6 +180,13 @@ ifeq ($(FILE_SET),0)
 endif
 	@echo "Bulinding link for main.cpp"
 	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(I2C)/$(I2C_MAIN) $(USER_MAIN_DIR)/$(MAIN)
+
+producer_consumer:
+ifeq ($(FILE_SET),0)
+	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
+endif
+	@echo "Bulinding link for main.cpp"
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(PRODUCER_CONSUMER)/$(PRODUCER_CONSUMER_MAIN) $(USER_MAIN_DIR)/$(MAIN)
 
 delete_main:
 ifeq ($(FILE_SET),0)
