@@ -3,14 +3,25 @@
 
 #include "LPC17xx.h"
 
+typedef union
+{
+  uint8_t byte;
+  struct
+  {
+    uint8_t TFE: 1;
+    uint8_t TNF: 1;
+    uint8_t RNE: 1;
+    uint8_t RFE: 1;
+    uint8_t BSY: 1;
+  } __attribute__((packed));
+} adlx_t;
+
 class LabSPI
 {
 private:
-  // SSP register lookup table structure
-
-  //LPC_SSP_TypeDef original_ssp[2] = {LPC_SSP0, LPC_SSP1};
+  // SSP register lookup table structure  
   LPC_SSP_TypeDef * SSP[2] = {LPC_SSP0, LPC_SSP1}; 
-  uint8_t current_ssp = 0; 
+  uint8_t current_ssp;
   
 public:
   enum FrameModes
@@ -56,6 +67,7 @@ public:
    * @return received byte from external device via SSP data register.
    */
   uint8_t transfer(uint8_t send);
+  adlx_t getStatusReg(void); 
   
   LabSPI();
   ~LabSPI();

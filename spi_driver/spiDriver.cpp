@@ -116,29 +116,6 @@ bool LabSPI::init(Peripheral peripheral, uint8_t data_size_select, FrameModes fo
     SSP[peripheral]->CPSR &= ~(0x7F << clock_prescale_register);
     SSP[peripheral]->CPSR |=  (divide << clock_prescale_register);
 
-    
-    //MODE
-    /*
-    SSP[peripheral]->CR0 &= ~(0x3 << cpol);  //Clear bit
-    SSP[peripheral]->CR0 &= ~(0x3 << cpha);  //Clear bit
-    switch(format){
-    case MODE0:
-      //LPC_SSP0->CR0 |= ~(0x1 << cpol); 
-      //LPC_SSP0->CR0 |= ~(0x1 << cpha); 
-      break;
-    case MODE1:
-      //LPC_SSP0->CR0 |= ~(0x1 << cpol); 
-      SSP[peripheral]->CR0 |= (0x1 << cpha); 
-      break;
-    case MODE2:
-      SSP[peripheral]->CR0 |= (0x1 << cpol); 
-      //LPC_SSP0->CR0 |= ~(0x1 << cpha); 
-      break;
-    case MODE3:
-      SSP[peripheral]->CR0 |= (0x1 << cpol); 
-      SSP[peripheral]->CR0 |= (0x1 << cpha); 
-      break;
-      }*/
     return_val = true; 
   } 
   return return_val; 
@@ -159,4 +136,16 @@ uint8_t LabSPI::transfer(uint8_t send)
   //}
   
 }
+
+adlx_t LabSPI::getStatusReg()
+{
+  adlx_t current_status;
+  current_status.TFE = (SSP[this->current_ssp]->SR & 0b1);
+  current_status.TNF = (SSP[this->current_ssp]->SR >> 1 & 0b1);
+  current_status.RNE = (SSP[this->current_ssp]->SR >> 2 & 0b1);
+  current_status.RFE = (SSP[this->current_ssp]->SR >> 3 & 0b1);
+  current_status.BSY = (SSP[this->current_ssp]->SR >> 4 & 0b1);
+  return current_status; 
+}
+
 
