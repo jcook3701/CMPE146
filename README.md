@@ -55,7 +55,7 @@ make build_links IMPORT_FILE= #FILE
 ```
 
 Step 5) Create your main.cpp sym-link from any of the driver folders.
-- Only single one of the driver main files can be linked to the USER_MAIN_DIR location at a single time. If you intened to use link a new main.cpp file to your USER_MAIN_DIR location you must firt user the "make delete_main" command. 
+- Only single one of the driver main files can be linked to the USER_MAIN_DIR location at a single time. If you intened to link a new main.cpp file to your USER_MAIN_DIR location you must first user the "make delete_main" command. 
 ```
 make adc
 make pwm
