@@ -10,15 +10,9 @@ or
 make template IMPORT_FILE= #File
 ```
 
-Step 2) Create your sym-links either from the standard rules.sh file or with a custom configuration file. 
-```
-make build_links
-or
-make build_links IMPORT_FILE= #FILE
-```
-
-Step 3) Edit makefile from https://github.com/kammce/SJSU-Dev
+Step 2) Edit makefile from https://github.com/kammce/SJSU-Dev
 - I added the following 'jared_lib' to my 'https://github.com/kammce/SJSU-Dev/firmware/lib/ folder'. 
+- After I made the following edits to 'https://github.com/kammce/SJSU-Dev/makefile'.
 
 ```
 CFLAGS = -mcpu=cortex-m3 \
@@ -36,9 +30,11 @@ CFLAGS = -mcpu=cortex-m3 \
     -I"$(LIB_DIR)/jared_lib/adc_driver/" \
     -I"$(LIB_DIR)/jared_lib/pwm_driver/" \
     -I"$(LIB_DIR)/jared_lib/spi_driver/" \
+    -I"$(LIB_DIR)/jared_lib/uart_driver/" \
+    -I"$(LIB_DIR)/jared_lib/i2c_driver/" \
 ```
 
-Step 4) Fill out your 'rules.sh' file
+Step 3) Fill out your 'rules.sh' file
 
 Environment Variable Template: (Generated from command in Step 2)
 ```
@@ -51,13 +47,36 @@ USER_MAIN_DIR=
 - Set var USER_DRIVER_DIR to the full path of the loaction where you would like your new sym-link to be created. (Mine is set to dir 'jared_lib' as seen bellow).
 - Set var USER_MAIN_DIR to the full path of the location where where you main is stored on the class project. 'https://github.com/kammce/SJSU-Dev/firmware/HelloWorld/L5_Application/' 
 
+Step 4) Create your driver sym-links either from the standard rules.sh file or with a custom configuration file. 
+```
+make build_links
+or
+make build_links IMPORT_FILE= #FILE
+```
 
-## Delete Links
-- Deleting a link is a simple as using the build_links command.
+Step 5) Create your main.cpp sym-link from any of the driver folders.
+- Only single one of the driver main files can be linked to the USER_MAIN_DIR location at a single time. If you intened to use link a new main.cpp file to your USER_MAIN_DIR location you must firt user the "make delete_main" command. 
+```
+make adc
+make pwm
+make spi
+make gpio
+make eint
+make uart
+make i2c
+```
+
+## Delete Driver Links
+- Deleting a driver link is as simple as using the "make destroy" command.
 ```
 make destroy
 or
 make destroy IMPORT_FILE= #FILE
+```
+
+- Deleting a main.cpp link is as simple as using the "make delete_main" command.
+```
+make delete_main
 ```
 
 ## Help
@@ -66,17 +85,37 @@ make destroy IMPORT_FILE= #FILE
 make help
 ```
 ```
----------------------------------------- Help Menu: -----------------------------------------
-|  1. template:                                                                             |
-|    - Generates a template for environment variables that are used in this makefile.       |
-|    - Default name for file is rules.sh                                                    |
-|  2. build:                                                                                |
-|    - Creates soft-links using user_driver_dir as a target and drivers from this git       |
-|      repo as a sourse.                                                                    |
-|  3. destroy:                                                                              |
-|    - Destroys soft-links from this git project. Specificity for the template activly      |
-|      currently enabled.                                                                   |
-|                                                                                           |
-|  For further information reference the README.md file located in this project.            |
----------------------------------------------------------------------------------------------
+"---------------------------------------- Help Menu: -----------------------------------------"
+"| Commands:                                                                                 |"
+"|                                                                                           |"
+"|  1. template:                                                                             |"
+"|    - Generates a template for environment variables that are used in this makefile.       |"
+"|    - Default name for file is rules.sh                                                    |"
+"|  2. build:                                                                                |"
+"|    - Creates soft-links using user_driver_dir as a target and drivers from this git       |"
+"|      repo as a sourse.                                                                    |"
+"|  3. destroy:                                                                              |"
+"|    - Destroys soft-links from this git project. Specificity for the template activly      |"
+"|      currently enabled.                                                                   |"
+"|  4. adc:                                                                                  |"
+"|     - Links main_adc.cpp to USER_MAIN_DIR.                                                |"
+"|  5. pwm:                                                                                  |"
+"|     - Links main_adc.pwm to USER_MAIN_DIR.                                                |"
+"|  5. spi:                                                                                  |"
+"|     - Links main_spi.cpp to USER_MAIN_DIR.                                                |"
+"|  6. gpio:                                                                                 |"
+"|     - Links main_gpio.cpp to USER_MAIN_DIR.                                               |"
+"|  7. eint:                                                                                 |"
+"|     - Links main_eint.cpp to USER_MAIN_DIR.                                               |"
+"|  8. uart:                                                                                 |"
+"|     - Links main_uart.cpp to USER_MAIN_DIR.                                               |"
+"|  9. i2c:                                                                                  |"
+"|     - Links main_i2c.cpp to USER_MAIN_DIR.                                                |"
+"|  10. delete_main:                                                                         |"
+"|     - Deletes any links to USER_MAIN_DIR.                                                 |"
+"|  11. test:                                                                                |"
+"|     - Prints the values of USER_DRIVER_DIR & USER_MAIN_DIR from rules.sh file.            |"
+"|                                                                                           |"
+"|  For further information reference the README.md file located in this project.            |"
+"---------------------------------------------------------------------------------------------"
 ```
