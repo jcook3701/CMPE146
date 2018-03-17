@@ -75,9 +75,11 @@ help:
 	$V echo "|     - Links main_uart.cpp to USER_MAIN_DIR.                                               |"
 	$V echo "|  9. i2c:                                                                                  |"
 	$V echo "|     - Links main_i2c.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  10. delete_main:                                                                         |"
+	$V echo "|  10. producer_consumer:                                                                   |"
+	$V echo "|     - Links main_producer_consumer.cpp to USER_MAIN_DIR                                   |"
+	$V echo "|  11. delete_main:                                                                         |"
 	$V echo "|     - Deletes any links to USER_MAIN_DIR.                                                 |"
-	$V echo "|  11. test:                                                                                |"
+	$V echo "|  12. test:                                                                                |"
 	$V echo "|     - Prints the values of USER_DRIVER_DIR & USER_MAIN_DIR from rules.sh file.            |"
 	$V echo "|                                                                                           |"
 	$V echo "|  For further information reference the README.md file located in this project.            |"
@@ -179,14 +181,14 @@ ifeq ($(FILE_SET),0)
 	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
 endif
 	@echo "Bulinding link for main.cpp"
-	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(I2C)/$(I2C_MAIN) $(USER_MAIN_DIR)/$(MAIN)
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(I2C)/$(I2C_MAIN) $(USER_MAIN_DIR)/$(MAIN))
 
 producer_consumer:
 ifeq ($(FILE_SET),0)
 	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
 endif
 	@echo "Bulinding link for main.cpp"
-	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(PRODUCER_CONSUMER)/$(PRODUCER_CONSUMER_MAIN) $(USER_MAIN_DIR)/$(MAIN)
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(PRODUCER_CONSUMER)/$(PRODUCER_CONSUMER_MAIN) $(USER_MAIN_DIR)/$(MAIN))
 
 delete_main:
 ifeq ($(FILE_SET),0)
