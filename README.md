@@ -73,8 +73,8 @@ make destroy
 or
 make destroy IMPORT_FILE= #FILE
 ```
-
-- Deleting a main.cpp link is as simple as using the "make delete_main" command.
+## Delete Main Links
+- Deleting any of the main.cpp links is as simple as using the "make delete_main" command.
 ```
 make delete_main
 ```
