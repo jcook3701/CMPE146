@@ -1,3 +1,8 @@
+#include "FreeRTOS.h"
+#include "tasks.hpp"
+#include "LPC17xx.h"
+#include "stdio.h"
+
 QueueHandle_t q;
 
 void producer(void *p) /* LOW priority */
@@ -23,8 +28,15 @@ void consumer(void *p) /* HIGH priority */
   }
 }
 
-void main(void)
+int main(int argc, char const *argv[])
 {
   // Queue handle is not valid until you create it
   q = xQueueCreate(10, sizeof(int));
+
+    
+  xTaskCreate(producer, "producer", STACK_SIZE, (void *)spi_package, 1 | portPRIVILEGE_BIT, NULL );
+  xTaskCreate(consumer, "consumer", STACK_SIZE, (void *)spi_package, 1 | portPRIVILEGE_BIT, NULL );
+
+
+  return -1; 
 }

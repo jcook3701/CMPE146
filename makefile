@@ -117,6 +117,9 @@ endif
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(UART)" ] || (ln -s $(PWD)/$(UART)/uart* $(USER_DRIVER_DIR)/$(UART))
 	$V [ -d "$(USER_DRIVER_DIR)/$(I2C)" ] || (mkdir $(USER_DRIVER_DIR)/$(I2C))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(I2C)" ] || (ln -s $(PWD)/$(I2C)/i2c* $(USER_DRIVER_DIR)/$(I2C))
+	$V [ -d "$(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER)" ] || (mkdir $(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER))
+	$V [ ! -d "$(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER)" ] || (ln -s $(PWD)/$(PRODUCER_CONSUMER)/producer* $(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER))
+
 
 # Will destroy links for user from the path specified in generated template file specified in $(IMPORT_FILE).
 # If you want it to be easy to destroy links don't delete template files after creation.  Keep them and generate new templates
@@ -133,6 +136,8 @@ endif
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(EINT)" ] || (rm -r $(USER_DRIVER_DIR)/$(EINT))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(UART)" ] || (rm -r $(USER_DRIVER_DIR)/$(UART))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(I2C)" ] || (rm -r $(USER_DRIVER_DIR)/$(I2C))
+	$V [ ! -d "$(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER)" ] || (rm -r $(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER))
+
 
 adc:
 ifeq ($(FILE_SET),0)

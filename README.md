@@ -32,6 +32,7 @@ CFLAGS = -mcpu=cortex-m3 \
     -I"$(LIB_DIR)/jared_lib/spi_driver/" \
     -I"$(LIB_DIR)/jared_lib/uart_driver/" \
     -I"$(LIB_DIR)/jared_lib/i2c_driver/" \
+    -I"$(LIB_DIR)/jared_lib/free_rtos_producer_consumer/" \
 ```
 
 Step 3) Fill out your 'rules.sh' file
