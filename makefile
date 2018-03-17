@@ -22,24 +22,33 @@ FILE_SET=1
 endif
 
 # Verbose
-V:=@
+V         :=@
 
 # Local Git File
-MAIN:= main.cpp
+MAIN      := main.cpp
+ADC_MAIN  := main_adc.cpp
+PWM_MAIN  := main_pwm.cpp
+SPI_MAIN  := main_spi.cpp
+GPIO_MAIN := main_gpio.cpp
+EINT_MAIN := main_eint.cpp
+UART_MAIN := main_uart.cpp
+I2C       := main_i2c.cpp
 
 # Local Git Dirs
-ADC:=  adc_driver
-PWM:=  pwm_driver
-SPI:=  spi_driver
-GPIO:= gpio_driver
-EINT:= eint_driver
-UART:= uart_driver
-I2C:= i2c_driver
+ADC       := adc_driver
+PWM       := pwm_driver
+SPI       := spi_driver
+GPIO      := gpio_driver
+EINT      := eint_driver
+UART      := uart_driver
+I2C       := i2c_driver
 
-.PHONY: help template test_env test build destroy
+.PHONY: help template build destroy adc pwm spi gpio eint uart i2c delete_main test
 
 help:
 	$V echo "---------------------------------------- Help Menu: -----------------------------------------"
+	$V echo "| Commands:                                                                                 |"
+	$V echo "|                                                                                           |"
 	$V echo "|  1. template:                                                                             |"
 	$V echo "|    - Generates a template for environment variables that are used in this makefile.       |"
 	$V echo "|    - Default name for file is rules.sh                                                    |"
@@ -49,8 +58,24 @@ help:
 	$V echo "|  3. destroy:                                                                              |"
 	$V echo "|    - Destroys soft-links from this git project. Specificity for the template activly      |"
 	$V echo "|      currently enabled.                                                                   |"
-	$V echo "|  4. link_main:                                                                            |"
-	$V echo "|  5. delete_main:                                                                          |"
+	$V echo "|  4. adc:                                                                                  |"
+	$V echo "|     - Links main_adc.cpp to USER_MAIN_DIR.                                                |"
+	$V echo "|  5. pwm:                                                                                  |"
+	$V echo "|     - Links main_adc.pwm to USER_MAIN_DIR.                                                |"
+	$V echo "|  5. spi:                                                                                  |"
+	$V echo "|     - Links main_spi.cpp to USER_MAIN_DIR.                                                |"
+	$V echo "|  6. gpio:                                                                                 |"
+	$V echo "|     - Links main_gpio.cpp to USER_MAIN_DIR.                                               |"
+	$V echo "|  7. eint:                                                                                 |"
+	$V echo "|     - Links main_eint.cpp to USER_MAIN_DIR.                                               |"
+	$V echo "|  8. uart:                                                                                 |"
+	$V echo "|     - Links main_uart.cpp to USER_MAIN_DIR.                                               |"
+	$V echo "|  9. i2c:                                                                                  |"
+	$V echo "|     - Links main_i2c.cpp to USER_MAIN_DIR.                                                |"
+	$V echo "|  10. delete_main:                                                                         |"
+	$V echo "|     - Deletes any links to USER_MAIN_DIR.                                                 |"
+	$V echo "|  11. test:                                                                                |"
+	$V echo "|     - Prints the values of USER_DRIVER_DIR & USER_MAIN_DIR from rules.sh file.            |"
 	$V echo "|                                                                                           |"
 	$V echo "|  For further information reference the README.md file located in this project.            |"
 	$V echo "---------------------------------------------------------------------------------------------"
@@ -104,12 +129,54 @@ endif
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(UART)" ] || (rm -r $(USER_DRIVER_DIR)/$(UART))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(I2C)" ] || (rm -r $(USER_DRIVER_DIR)/$(I2C))
 
-link_main:
+adc:
 ifeq ($(FILE_SET),0)
 	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
 endif
 	@echo "Bulinding link for main.cpp"
-	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(MAIN) $(USER_MAIN_DIR))
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(ADC)/$(ADC_MAIN) $(USER_MAIN_DIR)/$(MAIN))
+
+pwm:
+ifeq ($(FILE_SET),0)
+	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
+endif
+	@echo "Bulinding link for main.cpp"
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(PWM)/$(PWM_MAIN) $(USER_MAIN_DIR)/$(MAIN))
+
+spi:
+ifeq ($(FILE_SET),0)
+	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
+endif
+	@echo "Bulinding link for main.cpp"
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(SPI)/$(SPI_MAIN) $(USER_MAIN_DIR)/$(MAIN))
+
+gpio:
+ifeq ($(FILE_SET),0)
+	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
+endif
+	@echo "Bulinding link for main.cpp"
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(GPIO)/$(GPIO_MAIN) $(USER_MAIN_DIR)/$(MAIN))
+
+eint:
+ifeq ($(FILE_SET),0)
+	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
+endif
+	@echo "Bulinding link for main.cpp"
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(EINT)/$(EINT_MAIN) $(USER_MAIN_DIR)/$(MAIN))
+
+uart:
+ifeq ($(FILE_SET),0)
+	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
+endif
+	@echo "Bulinding link for main.cpp"
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(UART)/$(UART_MAIN) $(USER_MAIN_DIR)/$(MAIN))
+
+i2c:
+ifeq ($(FILE_SET),0)
+	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
+endif
+	@echo "Bulinding link for main.cpp"
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(I2C)/$(I2C_MAIN) $(USER_MAIN_DIR)/$(MAIN)
 
 delete_main:
 ifeq ($(FILE_SET),0)
@@ -118,6 +185,6 @@ endif
 	@echo "Unlinking main.cpp"
 	$V [ ! -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (unlink $(USER_MAIN_DIR)/$(MAIN))
 
-test_env test:
+test:
 	$V echo $(USER_DRIVER_DIR)
 	$V echo $(USER_MAIN_DIR)
