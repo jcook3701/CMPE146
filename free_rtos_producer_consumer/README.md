@@ -1,4 +1,4 @@
-# Lab 6: free_rtos_producer_consumer
+# Lab 6: Free RTOS Producer Consumer
 
 Use the same priority for both tasks, and note down the order of the print-outs
 - Sender prints first and reciever prints second on every occurance.  I assume that this is becuase of the one second delay that was placed inside of the sender which allows the reciever an apropriate amount of to run without interfering with the sender. 
