@@ -119,6 +119,7 @@ endif
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(I2C)" ] || (ln -s $(PWD)/$(I2C)/i2c* $(USER_DRIVER_DIR)/$(I2C))
 	$V [ -d "$(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER)" ] || (mkdir $(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER)" ] || (ln -s $(PWD)/$(PRODUCER_CONSUMER)/producer* $(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER))
+	$V [ ! -d "$(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER)" ] || (ln -s $(PWD)/$(PRODUCER_CONSUMER)/led* $(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER))
 
 
 # Will destroy links for user from the path specified in generated template file specified in $(IMPORT_FILE).
