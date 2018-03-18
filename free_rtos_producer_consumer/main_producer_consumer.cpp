@@ -5,7 +5,6 @@
 #include "io.hpp"
 #include "command_handler.hpp"
 
-#include "producer_consumer.hpp"
 #include "led_display_extension.hpp"
 
 #define LD_ARROWS      led_display_extension::getInstance()         ///< 2-Digit LED Display
@@ -26,17 +25,10 @@ struct producer_consumer_package{
 orientation_t accelerometer; 
 QueueHandle_t q;
 
-// At the terminal tasks taskEntry() function :
-bool terminalTask::taskEntry()
-{
-  CommandProcessor cp; 
-  cp.addHandler(cmd_handler_function,  "orientation", "Two options: 'orientation on' or 'orientation off'");
+void producer(void *p); /* LOW priority */
+void consumer(void *p); /* HIGH priority */
 
-  return true; 
-}
-
-bool cmd_handler_function(orientation_t orientationCmd)
-{
+CMD_HANDLER_FUNC(orientationCmd){
   // You can use FreeRTOS API or the wrapper resume() or suspend() methods
   if (cmdParams == "on") {
     vTaskResume(producer);
@@ -128,7 +120,9 @@ int main(int argc, char const *argv[])
   q = xQueueCreate(10, sizeof(int));
 
   producer_consumer_package *package = new producer_consumer_package; 
-    
+
+  scheduler_add_task(new terminalTask(PRIORITY_HIGH));
+  
   xTaskCreate(producer, "producer", STACK_SIZE, (void *)package, 2 | portPRIVILEGE_BIT, NULL );
   xTaskCreate(consumer, "consumer", STACK_SIZE, (void *)package, 1 | portPRIVILEGE_BIT, NULL );
 

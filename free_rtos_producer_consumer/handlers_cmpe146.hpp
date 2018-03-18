@@ -1,7 +1,8 @@
-#ifndef PRODUCER_CONSUMER_struct_H
-#define PRODUCER_CONSUMER_struct_H
+#ifndef HANDLERS_CMPE146_struct_H
+#define HANDLERS_CMPE146_struct_H
 
-#include "LPC17xx.h"
-  
+#include "command_handler.hpp"  // CMD_HANDLER_FUNC()
+
+CMD_HANDLER_FUNC(orientationCmd); 
 
 #endif
