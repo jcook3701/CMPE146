@@ -1,7 +1,7 @@
 # i2c Commands
 
 write:
-- Writes to the control register and sets to extended mode to on. 
+- Writes to the control register and sets the extended mode to on. 
 ```
 i2c read 0x90 0x00 1
 ```
