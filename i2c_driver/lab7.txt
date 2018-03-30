@@ -1,0 +1,65 @@
+LPC: System Reset: Booting ...
+----------------------------------------------------------
+System Boot @ 48.000 Mhz
+ Flash : OK -- Capacity 1997 KB, Available: 1997 KB
+SD Card: Error or not present.  Error #3, Mounted: No
+----------------------------------------------------------
+Memory Information:
+Global Used   :  2032
+malloc Used   :  3372
+malloc Avail. :     0
+System Avail. : 60132
+Next Heap ptr    : 0x10000D2C
+Last sbrk() ptr  : 0x10000D0C
+Last sbrk() size : 32
+Num  sbrk() calls: 34
+----------------------------------------------------------
+You can program a PERMANENT ID of your board.
+To do this, hold SW1 and SW4 and reset the board.
+CPU flash altered/programmed counts: 348/459
+CPU programmed flash (min/max): 68Kb - 116Kb
+Last programming took 2476 ms
+----------------------------------------------------------
+Calling your main()
+----------------------------------------------------------
+Supported Commands:
+       info : Task/CPU Info.  Use 'info 200' t ...
+    meminfo : See memory info
+     health : Output system health
+       time : 'time' to view time.  'time set  ...
+        cat : Read a file.  Ex: 'cat 0:file.tx ...
+         cp : Copy files from/to Flash/SD Card ...
+        dcp : Copy all files of a directory to ...
+         ls : Use 'ls 0:' for Flash, or 'ls 1: ...
+      mkdir : Create a directory. Ex: 'mkdir t ...
+         mv : Rename a file. Ex: 'rm 0:file.tx ...
+         nf : Write a new file. Ex: 'nf <file. ...
+         rm : Remove a file. Ex: 'rm 0:file.tx ...
+        i2c : 'i2c read 0x01 0x02 <count>' : R ...
+    storage : Parameters: 'format sd', 'format ...
+     reboot : Reboots the system
+        log : 'log <hello>': log an info messa ...
+      learn : Begin to learn IR codes for numb ...
+   wireless : Use 'wireless' to see the nested ...
+       file : Get a file using netload.exe or  ...
+      flash : 'flash <filename>' Will flash CP ...
+  telemetry : Outputs registered telemetry: 't ...
+ 'help <command>' to get help of a command
+LPC: i2c help
+Command failed!  Command's help is: 
+'i2c read 0x01 0x02 <count>' : Reads <count> registers of device 0x01 starting from 0x02
+'i2c write 0x01 0x02 0x03'   : Writes 0x03 to device 0x01, reg 0x02
+'i2c discover' : Discovers all I2C devices on the BUS
+   Finished in 1640 us
+LPC: i2c read 0x90 0x00 2
+Read status from device 0X90: OK: 
+     0: 0X1F
+   Finished in 1157 us
+LPC: i2c write 0x90 0x01 0x60B0
+Wrote 0X60B0 to 0X90::0X1
+   Finished in 905 us
+LPC: i2c read 0x90 0x00 2
+Read status from device 0X90: OK: 
+     0: 0X1F
+   Finished in 1172 us
+LPC: 
