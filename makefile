@@ -44,7 +44,7 @@ EINT      := eint_driver
 UART      := uart_driver
 I2C       := i2c_driver
 PRODUCER_CONSUMER := free_rtos_producer_consumer
-
+DEFAULT_MAIN := default_build
 
 .PHONY: help template build destroy adc pwm spi gpio eint uart i2c delete_main test
 
@@ -61,25 +61,27 @@ help:
 	$V echo "|  3. destroy:                                                                              |"
 	$V echo "|    - Destroys soft-links from this git project. Specificity for the template activly      |"
 	$V echo "|      currently enabled.                                                                   |"
-	$V echo "|  4. adc:                                                                                  |"
+	$V echo "|  4. default_main :                                                                        |"
+	$V echo "|     - Links preets main.cpp to USER_MAIN_DIR.                                             |"
+	$V echo "|  5. adc:                                                                                  |"
 	$V echo "|     - Links main_adc.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  5. pwm:                                                                                  |"
+	$V echo "|  6. pwm:                                                                                  |"
 	$V echo "|     - Links main_adc.pwm to USER_MAIN_DIR.                                                |"
-	$V echo "|  5. spi:                                                                                  |"
+	$V echo "|  7. spi:                                                                                  |"
 	$V echo "|     - Links main_spi.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  6. gpio:                                                                                 |"
+	$V echo "|  8. gpio:                                                                                 |"
 	$V echo "|     - Links main_gpio.cpp to USER_MAIN_DIR.                                               |"
-	$V echo "|  7. eint:                                                                                 |"
+	$V echo "|  9. eint:                                                                                 |"
 	$V echo "|     - Links main_eint.cpp to USER_MAIN_DIR.                                               |"
-	$V echo "|  8. uart:                                                                                 |"
+	$V echo "|  10. uart:                                                                                |"
 	$V echo "|     - Links main_uart.cpp to USER_MAIN_DIR.                                               |"
-	$V echo "|  9. i2c:                                                                                  |"
+	$V echo "|  11. i2c:                                                                                 |"
 	$V echo "|     - Links main_i2c.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  10. producer_consumer:                                                                   |"
+	$V echo "|  12. producer_consumer:                                                                   |"
 	$V echo "|     - Links main_producer_consumer.cpp to USER_MAIN_DIR                                   |"
-	$V echo "|  11. delete_main:                                                                         |"
+	$V echo "|  13. delete_main:                                                                         |"
 	$V echo "|     - Deletes any links to USER_MAIN_DIR.                                                 |"
-	$V echo "|  12. test:                                                                                |"
+	$V echo "|  14. test:                                                                                |"
 	$V echo "|     - Prints the values of USER_DRIVER_DIR & USER_MAIN_DIR from rules.sh file.            |"
 	$V echo "|                                                                                           |"
 	$V echo "|  For further information reference the README.md file located in this project.            |"
@@ -138,6 +140,14 @@ endif
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(UART)" ] || (rm -r $(USER_DRIVER_DIR)/$(UART))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(I2C)" ] || (rm -r $(USER_DRIVER_DIR)/$(I2C))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER)" ] || (rm -r $(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER))
+
+
+default_main:
+ifeq ($(FILE_SET),0)
+	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
+endif
+	@echo "Bulinding link for main.cpp"
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(DEFAULT_MAIN)/$(MAIN) $(USER_MAIN_DIR)/$(MAIN))
 
 
 adc:
