@@ -33,7 +33,7 @@ struct producer_consumer_package{
 };
 
 orientation_t accelerometer; 
-QueueHandle_t q;
+QueueHandle_t sensor_queue;
 TaskHandle_t producer_h;
 
 void producer(void *p); /* LOW priority */
@@ -59,12 +59,23 @@ CMD_HANDLER_FUNC(orientationCmd){
 void producer(void *p) /* LOW priority */
 {
   vTaskDelay(1000);
-  int send = 0; 
-
+  uint8_t size = 100; 
+  uint32_t sum;
+  uint32_t final: 
+  uint8_t count = 0; 
   while (1) {
-    int light_value = LS.getRawValue(); 
+
+    if(count == size-1){
+      final = sum/size; 
+      u0_dbg_printf("The average light value is: %i", final);
+      xQueueSend(sensor_queue, &final, 0);
+      count = 0;
+    }
+    light_values[count] = LS.getRawValue();
+    sum += LS.getRawValue(); 
+    count++;
     //wait 1 second
-    vTaskDelay(100);
+    vTaskDelay(1);
   }
 }
 
