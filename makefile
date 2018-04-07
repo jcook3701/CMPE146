@@ -34,6 +34,7 @@ EINT_MAIN := main_eint.cpp
 UART_MAIN := main_uart.cpp
 I2C_MAIN  := main_i2c.cpp
 PRODUCER_CONSUMER_MAIN := main_producer_consumer.cpp
+WATCHDOG_MAIN := main_watchdog.cpp
 
 # Local Git Dirs
 ADC       := adc_driver
@@ -44,7 +45,8 @@ EINT      := eint_driver
 UART      := uart_driver
 I2C       := i2c_driver
 PRODUCER_CONSUMER := free_rtos_producer_consumer
-DEFAULT_MAIN := default_build
+DEFAULT := default_build
+WATCHDOG := watchdog_driver
 
 .PHONY: help template build destroy adc pwm spi gpio eint uart i2c delete_main test
 
@@ -77,11 +79,13 @@ help:
 	$V echo "|     - Links main_uart.cpp to USER_MAIN_DIR.                                               |"
 	$V echo "|  11. i2c:                                                                                 |"
 	$V echo "|     - Links main_i2c.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  12. producer_consumer:                                                                   |"
+	$V echo "|  12. watchdog:                                                                            |"
+	$V echo "|     - Links main_watchdog.cpp to USER_MAIN_DIR                                            |"
+	$V echo "|  13. producer_consumer:                                                                   |"
 	$V echo "|     - Links main_producer_consumer.cpp to USER_MAIN_DIR                                   |"
-	$V echo "|  13. delete_main:                                                                         |"
+	$V echo "|  14. delete_main:                                                                         |"
 	$V echo "|     - Deletes any links to USER_MAIN_DIR.                                                 |"
-	$V echo "|  14. test:                                                                                |"
+	$V echo "|  15. test:                                                                                |"
 	$V echo "|     - Prints the values of USER_DRIVER_DIR & USER_MAIN_DIR from rules.sh file.            |"
 	$V echo "|                                                                                           |"
 	$V echo "|  For further information reference the README.md file located in this project.            |"
@@ -122,7 +126,8 @@ endif
 	$V [ -d "$(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER)" ] || (mkdir $(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER)" ] || (ln -s $(PWD)/$(PRODUCER_CONSUMER)/producer* $(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER)" ] || (ln -s $(PWD)/$(PRODUCER_CONSUMER)/led* $(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER))
-
+	$V [ -d "$(USER_DRIVER_DIR)/$(WATCHDOG)" ] || (mkdir $(USER_DRIVER_DIR)/$(WATCHDOG))
+	$V [ ! -d "$(USER_DRIVER_DIR)/$(WATCHDOG)" ] || (ln -s $(PWD)/$(WATCHDOG)/wat* $(USER_DRIVER_DIR)/$(WATCHDOG))
 
 # Will destroy links for user from the path specified in generated template file specified in $(IMPORT_FILE).
 # If you want it to be easy to destroy links don't delete template files after creation.  Keep them and generate new templates
@@ -147,8 +152,7 @@ ifeq ($(FILE_SET),0)
 	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
 endif
 	@echo "Bulinding link for main.cpp"
-	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(DEFAULT_MAIN)/$(MAIN) $(USER_MAIN_DIR)/$(MAIN))
-
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(DEFAULT)/$(MAIN) $(USER_MAIN_DIR)/$(MAIN))
 
 adc:
 ifeq ($(FILE_SET),0)
@@ -205,6 +209,13 @@ ifeq ($(FILE_SET),0)
 endif
 	@echo "Bulinding link for main.cpp"
 	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(PRODUCER_CONSUMER)/$(PRODUCER_CONSUMER_MAIN) $(USER_MAIN_DIR)/$(MAIN))
+
+watchdog:
+ifeq ($(FILE_SET),0)
+	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
+endif
+	@echo "Bulinding link for main.cpp"
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(WATCHDOG)/$(DEFAULT)/$(WATCHDOG_MAIN) $(USER_MAIN_DIR)/$(MAIN))
 
 delete_main:
 ifeq ($(FILE_SET),0)
