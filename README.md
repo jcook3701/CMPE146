@@ -46,8 +46,7 @@ Environment Variable Template: (Generated from command in Step 2)
 USER_DRIVER_DIR=
 USER_MAIN_DIR=
 ```
-
-## Example
+Example Rules File )
 ```
 #rules.sh environment variable template file
 #Do not include any ("quotation marks") in this file
