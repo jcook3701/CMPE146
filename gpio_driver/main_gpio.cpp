@@ -2,12 +2,11 @@
 #include "task.h"
 #include "uart0_min.h"
 #include "printf_lib.h"
-
-#include "LabGPIO_struct.hpp"
-#include "LabGPIO.hpp"
-#include "gpio_interrupt_driver.hpp"
 #include "lpc_isr.h"
 #include "semphr.h"
+
+#include "gpioStruct.hpp"
+#include "gpioDriver.hpp"
 
 #define HIGH true
 #define LOW false

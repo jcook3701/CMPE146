@@ -145,7 +145,7 @@ endif
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(UART)" ] || (rm -r $(USER_DRIVER_DIR)/$(UART))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(I2C)" ] || (rm -r $(USER_DRIVER_DIR)/$(I2C))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER)" ] || (rm -r $(USER_DRIVER_DIR)/$(PRODUCER_CONSUMER))
-
+	$V [ ! -d "$(USER_DRIVER_DIR)/$(WATCHDOG)" ] || (rm -r $(USER_DRIVER_DIR)/$(WATCHDOG))
 
 default_main:
 ifeq ($(FILE_SET),0)
@@ -215,7 +215,7 @@ ifeq ($(FILE_SET),0)
 	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
 endif
 	@echo "Bulinding link for main.cpp"
-	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(WATCHDOG)/$(DEFAULT)/$(WATCHDOG_MAIN) $(USER_MAIN_DIR)/$(MAIN))
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(WATCHDOG)/$(WATCHDOG_MAIN) $(USER_MAIN_DIR)/$(MAIN))
 
 delete_main:
 ifeq ($(FILE_SET),0)
