@@ -63,11 +63,12 @@ void producer(void *p) /* LOW priority */
   uint8_t count = 0; 
   uint32_t sum = 0;
   uint32_t final = 0; 
-  
+    
   while (1) {
+    
     if(count == size-1){
       final = sum/size; 
-      u0_dbg_printf("The average light value is: %i", final);
+      u0_dbg_printf("Producer: The average light value is: %i\n", final);
       xQueueSend(sensor_queue, &final, 0);
       count = 0;
     }
@@ -76,6 +77,7 @@ void producer(void *p) /* LOW priority */
     //xEventGroupSetBits(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet);
 
     //wait 1 second
+    
     vTaskDelay(1);
   }
 }
@@ -83,7 +85,8 @@ void producer(void *p) /* LOW priority */
 void consumer(void *p) /* HIGH priority */
 {
   vTaskDelay(1000);
-  
+
+  char line[128] ;
   char word[128];
   char tmp[10]; 
   uint32_t received_value;
@@ -92,31 +95,35 @@ void consumer(void *p) /* HIGH priority */
   time = clock();
 
   while (1) {
-    value_was_received = xQueueReceive(sensor_queue, &received_value, portMAX_DELAY);
-    u0_dbg_printf("recieved: %i\n", received_value);
 
-    FILE *file0 = fopen("1:sensor_data", "a");
-    char line[128] = { 0 };
+    
+    value_was_received = xQueueReceive(sensor_queue, &received_value, portMAX_DELAY);
+    u0_dbg_printf("Consumer: recieved: %i\n", received_value);
+
+    FILE *file0 = fopen("1:sensor_data.txt", "a");
     //setup format for write to SD card. 
     strcpy(word,"time: ");
     snprintf(tmp, sizeof(((float)time)/CLOCKS_PER_SEC), "%f",((float)time)/CLOCKS_PER_SEC);
     strcat(word, tmp);
     strcat(word, " tempature: ");
-    snprintf(tmp, sizeof(received_value), "%i", received_value);
+    snprintf(tmp, sizeof(received_value), "%lu", received_value);
     strcat(word, tmp);
-    strcat(word, "\n"); 
+    u0_dbg_printf("Consumer: word output: %s\n", word);
     if(file0){
 	fputs(word, file0); 
 	fgets(line, sizeof(line)-1, file0);
 	fclose(file0);
       }
-    u0_dbg_printf("line output: %c\n", line);
+    u0_dbg_printf("Consumer: line output - read from sd card: %s\n\n", line);
     //xEventGroupSetBits(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet);
+    
   }
 }
 
 void watchdog(void *p){
-  FILE *file0 = fopen("1:watchdog_info", "a");
+  FILE *file0 = fopen("1:watchdog_info.txt", "a");
+  while(1){
+  };
   
 }
 
@@ -132,7 +139,7 @@ int main(int argc, char const *argv[])
   if( event_handler == NULL){
     u0_dbg_printf("The event group was not created because there was insufficent FreeRTOS heap available."); 
   }
-
+  u0_dbg_printf("starting_up"); 
   producer_consumer_package *package = new producer_consumer_package; 
   
   
