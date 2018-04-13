@@ -1,11 +1,12 @@
 #include "FreeRTOS.h"
 #include "tasks.hpp"
 #include "stdio.h"
+#include <time.h>
+#include <string.h>
 #include "printf_lib.h"
-#include "io.hpp"
 #include "command_handler.hpp"
-
 #include "event_groups.h"
+#include "io.hpp"
 
 #include "led_display_extension.hpp"
 
@@ -57,11 +58,12 @@ CMD_HANDLER_FUNC(orientationCmd){
 void producer(void *p) /* LOW priority */
 {
   vTaskDelay(1000);
+
   uint8_t size = 100;
   uint8_t count = 0; 
   uint32_t sum = 0;
   uint32_t final = 0; 
-
+  
   while (1) {
     if(count == size-1){
       final = sum/size; 
@@ -82,16 +84,39 @@ void consumer(void *p) /* HIGH priority */
 {
   vTaskDelay(1000);
   
-  uint32_t x;
-  while (1) {
-    xQueueReceive(sensor_queue, &x, portMAX_DELAY);
-    u0_dbg_printf("recieved: %i\n", x);
+  char word[128];
+  char tmp[10]; 
+  uint32_t received_value;
+  bool value_was_received = false;
+  clock_t time;
+  time = clock();
 
+  while (1) {
+    value_was_received = xQueueReceive(sensor_queue, &received_value, portMAX_DELAY);
+    u0_dbg_printf("recieved: %i\n", received_value);
+
+    FILE *file0 = fopen("1:sensor_data", "a");
+    char line[128] = { 0 };
+    //setup format for write to SD card. 
+    strcpy(word,"time: ");
+    snprintf(tmp, sizeof(((float)time)/CLOCKS_PER_SEC), "%f",((float)time)/CLOCKS_PER_SEC);
+    strcat(word, tmp);
+    strcat(word, " tempature: ");
+    snprintf(tmp, sizeof(received_value), "%i", received_value);
+    strcat(word, tmp);
+    strcat(word, "\n"); 
+    if(file0){
+	fputs(word, file0); 
+	fgets(line, sizeof(line)-1, file0);
+	fclose(file0);
+      }
+    u0_dbg_printf("line output: %c\n", line);
     //xEventGroupSetBits(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet);
   }
 }
 
 void watchdog(void *p){
+  FILE *file0 = fopen("1:watchdog_info", "a");
   
 }
 
