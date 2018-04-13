@@ -78,7 +78,7 @@ consumer_task::consumer_task() : scheduler_task("consumer_task",  20 * 512, PRIO
 bool consumer_task::run(void *p)
 {
   vTaskDelay(1000);
-  FILE *file0 = fopen("1:sensor_data.txt", "ab");
+  FILE *file0 = fopen("1:sensor_data.txt", "a");
   char word[128];
   char tmp[15]; 
   uint32_t received_value;
@@ -107,7 +107,7 @@ bool consumer_task::run(void *p)
 	because the producer only sends onece every 100ms if we wait ten times before writing
 	a value to the sd card we will have waited 1 second inbetween writes. 
       */
-      file0 = fopen("1:sensor_data.txt", "ab");
+      file0 = fopen("1:sensor_data.txt", "a");
       if(file0){
 	fputs(word, file0);
 	fgets(line, sizeof(line)-1, file0);
@@ -138,8 +138,8 @@ bool watchdog_task::run(void *p)
 {
   vTaskDelay(1000);
   
-  FILE *file0 = fopen("1:watchdog_cpu_info.txt", "ab");
-  FILE *file1 = fopen("1:watchdog_stuck_info.txt", "ab");
+  FILE *file0 = fopen("1:watchdog_cpu_info.txt", "a");
+  FILE *file1 = fopen("1:watchdog_stuck_info.txt", "a");
   
   char word0[128];
   char word1[128];
@@ -165,7 +165,7 @@ bool watchdog_task::run(void *p)
 	//then producer_flag is low on uxReturn
 	strcpy(word1, "producer error!");
 	u0_dbg_printf("watchdog: %s\n", word1);
-	file1 = fopen("1:watchdog_stuck_info.txt", "ab");
+	file1 = fopen("1:watchdog_stuck_info.txt", "a");
 	if(file1){
 	  fputs(word1, file1); 
 	  //fgets(line, sizeof(line)-1, file1);
@@ -176,7 +176,7 @@ bool watchdog_task::run(void *p)
 	//then the consumer_flag is low on uxReturn
 	strcpy(word1, "consumer error!");
 	u0_dbg_printf("watchdog: %s\n", word1);
-	file1 = fopen("1:watchdog_stuck_info.txt", "ab");
+	file1 = fopen("1:watchdog_stuck_info.txt", "a");
 	if(file1){
 	  fputs(word1, file1); 
 	  fgets(line, sizeof(line)-1, file1);
