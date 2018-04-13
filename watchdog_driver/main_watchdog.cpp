@@ -7,10 +7,14 @@
 #include "command_handler.hpp"
 #include "event_groups.h"
 #include "io.hpp"
+#include "watchdogDriver.hpp"
 
-#define producer_flag (1 << 0)
-#define consumer_flag (1 << 1)
 
+#define STACK_SIZE 1024
+#define watchdog_flag ( 1 << 0 )
+#define producer_flag ( 1 << 1 )
+#define consumer_flag ( 1 << 2 )
+#define all_sync_bits ( watchdog_flag | producer_flag | consumer_flag)
 /*
  *  Made edits to:
  *     -  handlers.hpp
@@ -38,27 +42,13 @@ void producer(void *p); /* MEDIUM priority */
 void consumer(void *p); /* MEDIUM priority */
 void watchdog(void *p); /* HIGH priority */ 
 
-
-CMD_HANDLER_FUNC(orientationCmd){
-  // You can use FreeRTOS API or the wrapper resume() or suspend() methods
-  if (cmdParams == "on")
-    {
-      //u0_dbg_printf("ON"); 
-      vTaskResume(producer_handler);
-    }
-  else
-    {
-      //output.putline("off");
-      //u0_dbg_printf("OFF"); 
-      vTaskSuspend(producer_handler);
-    }
-  
-  return true;
+producer_task::producer_task() : scheduler_task("producer_task", STACK_SIZE, PRIORITY_MEDIUM)
+{
 }
 
-void producer(void *p) /* LOW priority */
+bool producer_task::run(void *p)
 {
-  vTaskDelay(1);
+    vTaskDelay(1);
 
   producer_consumer_package *package;
   package = (producer_consumer_package*) p;
@@ -83,10 +73,15 @@ void producer(void *p) /* LOW priority */
 
     //wait 1 second
     vTaskDelay(1);
-  }
+  };
+  return true; 
 }
 
-void consumer(void *p) /* HIGH priority */
+consumer_task::consumer_task() : scheduler_task("consumer_task", STACK_SIZE, PRIORITY_MEDIUM)
+{
+}
+
+bool consumer_task::run(void *p)
 {
   vTaskDelay(1000);
 
@@ -98,19 +93,15 @@ void consumer(void *p) /* HIGH priority */
   char tmp[10]; 
   uint32_t received_value;
   bool value_was_received = false;
-  clock_t time;
-  time = clock();
 
   while (1) {
-
-    
     value_was_received = xQueueReceive(sensor_queue, &received_value, portMAX_DELAY);
     u0_dbg_printf("Consumer: recieved: %i\n", received_value);
 
     FILE *file0 = fopen("1:sensor_data.txt", "a");
     //setup format for write to SD card. 
     strcpy(word,"time: ");
-    snprintf(tmp, sizeof(((float)time)/CLOCKS_PER_SEC), "%f",((float)time)/CLOCKS_PER_SEC);
+    snprintf(tmp, sizeof(((float)xTaskGetTickCount())/portTICK_PERIOD_MS), "%f",((float)xTaskGetTickCount())/portTICK_PERIOD_MS);
     strcat(word, tmp);
     strcat(word, " tempature: ");
     snprintf(tmp, sizeof(received_value), "%lu", received_value);
@@ -125,28 +116,41 @@ void consumer(void *p) /* HIGH priority */
     //set consumer flag bit
     xEventGroupSetBits(package->project_event_handler, consumer_flag);
     
-  }
+  };
+  return true; 
+
 }
 
-void watchdog(void *p){
+watchdog_task::watchdog_task() : scheduler_task("watchdog_task", STACK_SIZE, PRIORITY_HIGH)
+{
+}
 
+bool watchdog_task::run(void *p)
+{
+  printf("\n---------------------------------\n");
+	 
+  //Package holdes event
   producer_consumer_package *package;
   package = (producer_consumer_package*) p;
   
   FILE *file0 = fopen("1:watchdog_info.txt", "a");
-  while(1){
-    if( ( package->project_event_handler & ( producer_flag | consumer_flag ) ) == ( producer_flag | consumer_flag ) ){
-      /* Both bit 0 and bit 1 are set if this if statment runs  */
 
-      xEventGroupClearBits(package->project_event_handler, producer_flag | consumer_flag);
+  TickType_t xTicksToWait = 1000 / portTICK_PERIOD_MS;  //wait one second before acting
+
+  while(1){
+
+    EventBits_t uxReturn = xEventGroupSync(package->project_event_handler, watchdog_flag, all_sync_bits, xTicksToWait);
+    if((uxReturn & all_sync_bits) == all_sync_bits){
+
     }
+    /* Both bit 0 and bit 1 are set if this if statment runs  */
   };
-  
+  return true; 
 }
 
 int main(int argc, char const *argv[])
 {
-  const uint32_t STACK_SIZE = 1024;
+  //const uint32_t STACK_SIZE = 1024;
 
 
   /* Init FreeRTOS features */
@@ -161,11 +165,12 @@ int main(int argc, char const *argv[])
   
   
   scheduler_add_task(new terminalTask(PRIORITY_HIGH));
-  //  scheduler_add_task(new producer());
-  //  scheduler_add_task(new consumer());
-  xTaskCreate(producer, "producer", STACK_SIZE, (void *)package, 2 | portPRIVILEGE_BIT, &producer_handler );
-  xTaskCreate(consumer, "consumer", STACK_SIZE, (void *)package, 2 | portPRIVILEGE_BIT, &consumer_handler );
-  xTaskCreate(watchdog, "watchdog", STACK_SIZE, (void *)package, 1 | portPRIVILEGE_BIT, NULL );
+  scheduler_add_task(new producer_task());
+  scheduler_add_task(new consumer_task());
+  scheduler_add_task(new watchdog_task()); 
+  //xTaskCreate(producer, "producer", STACK_SIZE, (void *)package, 2 | portPRIVILEGE_BIT, &producer_handler );
+  //xTaskCreate(consumer, "consumer", STACK_SIZE, (void *)package, 2 | portPRIVILEGE_BIT, &consumer_handler );
+  //xTaskCreate(watchdog, "watchdog", STACK_SIZE, (void *)package, 1 | portPRIVILEGE_BIT, NULL );
 
   scheduler_start();
   //  vTaskStartScheduler();
