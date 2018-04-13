@@ -8,7 +8,8 @@
 #include "event_groups.h"
 #include "io.hpp"
 
-#include "led_display_extension.hpp"
+#define producer_flag (1 << 0)
+#define consumer_flag (1 << 1)
 
 /*
  *  Made edits to:
@@ -57,8 +58,11 @@ CMD_HANDLER_FUNC(orientationCmd){
 
 void producer(void *p) /* LOW priority */
 {
-  vTaskDelay(1000);
+  vTaskDelay(1);
 
+  producer_consumer_package *package;
+  package = (producer_consumer_package*) p;
+  
   uint8_t size = 100;
   uint8_t count = 0; 
   uint32_t sum = 0;
@@ -74,10 +78,10 @@ void producer(void *p) /* LOW priority */
     }
     sum += LS.getRawValue(); 
     count++;
-    //xEventGroupSetBits(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet);
+    //set producer flag bit
+    xEventGroupSetBits(package->project_event_handler, producer_flag);
 
     //wait 1 second
-    
     vTaskDelay(1);
   }
 }
@@ -86,6 +90,9 @@ void consumer(void *p) /* HIGH priority */
 {
   vTaskDelay(1000);
 
+  producer_consumer_package *package;
+  package = (producer_consumer_package*) p;
+  
   char line[128] ;
   char word[128];
   char tmp[10]; 
@@ -115,14 +122,24 @@ void consumer(void *p) /* HIGH priority */
 	fclose(file0);
       }
     u0_dbg_printf("Consumer: line output - read from sd card: %s\n\n", line);
-    //xEventGroupSetBits(EventGroupHandle_t xEventGroup, const EventBits_t uxBitsToSet);
+    //set consumer flag bit
+    xEventGroupSetBits(package->project_event_handler, consumer_flag);
     
   }
 }
 
 void watchdog(void *p){
+
+  producer_consumer_package *package;
+  package = (producer_consumer_package*) p;
+  
   FILE *file0 = fopen("1:watchdog_info.txt", "a");
   while(1){
+    if( ( package->project_event_handler & ( producer_flag | consumer_flag ) ) == ( producer_flag | consumer_flag ) ){
+      /* Both bit 0 and bit 1 are set if this if statment runs  */
+
+      xEventGroupClearBits(package->project_event_handler, producer_flag | consumer_flag);
+    }
   };
   
 }
