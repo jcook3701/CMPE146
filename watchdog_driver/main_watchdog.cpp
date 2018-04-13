@@ -42,7 +42,7 @@ void producer(void *p); /* MEDIUM priority */
 void consumer(void *p); /* MEDIUM priority */
 void watchdog(void *p); /* HIGH priority */ 
 
-producer_task::producer_task() : scheduler_task("producer_task",  8 * 512, PRIORITY_MEDIUM)
+producer_task::producer_task() : scheduler_task("producer_task",  20 * 512, PRIORITY_MEDIUM)
 {
 }
 
@@ -71,7 +71,7 @@ bool producer_task::run(void *p)
   return true; 
 }
 
-consumer_task::consumer_task() : scheduler_task("consumer_task",  8 * 512, PRIORITY_MEDIUM)
+consumer_task::consumer_task() : scheduler_task("consumer_task",  20 * 512, PRIORITY_MEDIUM)
 {
 }
 
@@ -142,16 +142,17 @@ bool watchdog_task::run(void *p)
   char tmp[10];
   EventBits_t uxReturn;
   TickType_t xTicksToWait = 1000 / portTICK_PERIOD_MS;  //wait one second before acting
-  bool one_second = false; 
+  bool one_second = false;
+  uint32_t count = 0; 
   //printf("CPU Usage : %i %%\n", getTaskCpuPercent());    /* get OUR tasks' cpu usage */  needs to happen every 60 seconds.  
   
   while(1){
+    /*
     if(xTaskGetTickCount()/portTICK_PERIOD_MS % 1000 == 0){
-      one_second = true; 
-    }
+      one_second = true;  
+      }*/
     uxReturn = xEventGroupSync(event_handler, watchdog_flag, all_sync_bits, xTicksToWait);
-    if( ((uxReturn & all_sync_bits) == all_sync_bits) && one_second == true){
-      one_second = false; 
+    if( ((uxReturn & all_sync_bits) == all_sync_bits)){
     }
     else{
       one_second = false; 
@@ -160,9 +161,9 @@ bool watchdog_task::run(void *p)
 	strcpy(word1, "producer error!");
 	u0_dbg_printf("watchdog: %s\n", word1); 
 	if(file1){
-	  fputs(word1, file0); 
-	fgets(line, sizeof(line)-1, file1);
-	fclose(file1);
+	  fputs(word1, file1); 
+	  //fgets(line, sizeof(line)-1, file1);
+	  fclose(file1);
 	}
       }
       if((uxReturn & consumer_flag) != consumer_flag){
@@ -170,22 +171,26 @@ bool watchdog_task::run(void *p)
 	strcpy(word1, "consumer error!");
 	u0_dbg_printf("watchdog: %s\n", word1); 
 	if(file1){
-	  fputs(word1, file0); 
+	  fputs(word1, file1); 
 	  fgets(line, sizeof(line)-1, file1);
 	  fclose(file1);
 	}
       }
     }
-    if(xTaskGetTickCount()/portTICK_PERIOD_MS % 60000 == 0){
+    //    if(xTaskGetTickCount()/portTICK_PERIOD_MS % 60000 == 0){
+    if(count == 6000){
+      /* if count is equal to 6000 then the producer has run for a total time of 60,000ms or 60 secons */
+      count = 0; 
       strcat(word0, "cpu: ");
       snprintf(tmp, sizeof(getTaskCpuPercent()), "%i\n", getTaskCpuPercent());
       strcat(word0, tmp);
+      u0_dbg_printf("watchdog: %s\n", word0); 
       if(file0){
 	fputs(word0, file0); 
 	fgets(line, sizeof(line)-1, file0);
 	fclose(file0);
-    }
-
+      }
+      count++; 
     }
     /* Both bit 0 and bit 1 are set if this if statment runs  */
   };
