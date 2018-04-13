@@ -25,11 +25,11 @@
  *        - line 74: cp.addHandler(orientationCmd,  "orientation", "Two options: 'orientation on' or 'orientation off'");
  */
 
-
+/*
 struct producer_consumer_package{
   EventGroupHandle_t project_event_handler; 
 };
-
+*/
 
 QueueHandle_t sensor_queue;
 
@@ -42,16 +42,13 @@ void producer(void *p); /* MEDIUM priority */
 void consumer(void *p); /* MEDIUM priority */
 void watchdog(void *p); /* HIGH priority */ 
 
-producer_task::producer_task() : scheduler_task("producer_task", STACK_SIZE, PRIORITY_MEDIUM)
+producer_task::producer_task() : scheduler_task("producer_task",  8 * 512, PRIORITY_MEDIUM)
 {
 }
 
 bool producer_task::run(void *p)
 {
-    vTaskDelay(1);
-
-  producer_consumer_package *package;
-  package = (producer_consumer_package*) p;
+  vTaskDelay(1);
   
   uint8_t size = 100;
   uint8_t count = 0; 
@@ -61,34 +58,33 @@ bool producer_task::run(void *p)
   while (1) {
     
     if(count == size-1){
-      final = sum/size; 
-      u0_dbg_printf("Producer: The average light value is: %i\n", final);
+      final = sum/size;
+      if(xTaskGetTickCount()/portTICK_PERIOD_MS % 100 == 0){
+	u0_dbg_printf("Producer: The average light value is: %i\n", final);
+      }
       xQueueSend(sensor_queue, &final, 0);
       count = 0;
     }
     sum += LS.getRawValue(); 
     count++;
     //set producer flag bit
-    xEventGroupSetBits(package->project_event_handler, producer_flag);
-
+    //    xEventGroupSetBits(event_handler, producer_flag);
+    xEventGroupSync(event_handler, producer_flag, all_sync_bits, 1000); 
     //wait 1 second
     vTaskDelay(1);
   };
   return true; 
 }
 
-consumer_task::consumer_task() : scheduler_task("consumer_task", STACK_SIZE, PRIORITY_MEDIUM)
+consumer_task::consumer_task() : scheduler_task("consumer_task",  6 * 512, PRIORITY_MEDIUM)
 {
 }
 
 bool consumer_task::run(void *p)
 {
   vTaskDelay(1000);
-
-  producer_consumer_package *package;
-  package = (producer_consumer_package*) p;
   
-  char line[128] ;
+  char line[128];
   char word[128];
   char tmp[10]; 
   uint32_t received_value;
@@ -106,41 +102,59 @@ bool consumer_task::run(void *p)
     strcat(word, " tempature: ");
     snprintf(tmp, sizeof(received_value), "%lu", received_value);
     strcat(word, tmp);
-    u0_dbg_printf("Consumer: word output: %s\n", word);
+    strcat(word, "\n");
     if(file0){
 	fputs(word, file0); 
 	fgets(line, sizeof(line)-1, file0);
 	fclose(file0);
-      }
-    u0_dbg_printf("Consumer: line output - read from sd card: %s\n\n", line);
-    //set consumer flag bit
-    xEventGroupSetBits(package->project_event_handler, consumer_flag);
+    }
+    //    u0_dbg_printf("Consumer: word output: %s\n", word);
+    //    u0_dbg_printf("Consumer: line output - read from sd card: %s\n\n", line);
     
+    if(xTaskGetTickCount()/portTICK_PERIOD_MS % 100 == 0){
+      
+      u0_dbg_printf("Consumer: line output - read from sd card: %s\n\n", line);
+      }
+    //set consumer flag bit
+    //    xEventGroupSetBits(event_handler, consumer_flag);
+    xEventGroupSync(event_handler, consumer_flag, all_sync_bits, 1000); 
+    vTaskDelay(1);
   };
   return true; 
 
 }
 
-watchdog_task::watchdog_task() : scheduler_task("watchdog_task", STACK_SIZE, PRIORITY_HIGH)
+watchdog_task::watchdog_task() : scheduler_task("watchdog_task",  4 * 512, PRIORITY_HIGH)
 {
 }
 
 bool watchdog_task::run(void *p)
-{
-  printf("\n---------------------------------\n");
-	 
-  //Package holdes event
-  producer_consumer_package *package;
-  package = (producer_consumer_package*) p;
-  
-  FILE *file0 = fopen("1:watchdog_info.txt", "a");
-
+{  
+  FILE *file0 = fopen("1:watchdog_cpu_info.txt", "a");
+  FILE *file1 = fopen("1:watchdog_stuck_info.txt", "a");
+  char word[128];
+  char line[128] ;  
+  char tmp[10];
+  EventBits_t uxReturn;
   TickType_t xTicksToWait = 1000 / portTICK_PERIOD_MS;  //wait one second before acting
 
+  //printf("CPU Usage : %i %%\n", getTaskCpuPercent());    /* get OUR tasks' cpu usage */  needs to happen every 60 seconds.  
+  
   while(1){
 
-    EventBits_t uxReturn = xEventGroupSync(package->project_event_handler, watchdog_flag, all_sync_bits, xTicksToWait);
-    if((uxReturn & all_sync_bits) == all_sync_bits){
+    uxReturn = xEventGroupSync(event_handler, watchdog_flag, all_sync_bits, xTicksToWait);
+    if(!((uxReturn & all_sync_bits) == all_sync_bits)){
+      
+    }
+    if(xTaskGetTickCount()/portTICK_PERIOD_MS % 60000 == 0){
+      strcat(word, "cpu: ");
+      snprintf(tmp, sizeof(getTaskCpuPercent()), "%lu\n", getTaskCpuPercent());
+      strcat(word, tmp);
+      if(file0){
+	fputs(word, file0); 
+	fgets(line, sizeof(line)-1, file0);
+	fclose(file0);
+    }
 
     }
     /* Both bit 0 and bit 1 are set if this if statment runs  */
@@ -161,7 +175,9 @@ int main(int argc, char const *argv[])
     u0_dbg_printf("The event group was not created because there was insufficent FreeRTOS heap available."); 
   }
   u0_dbg_printf("starting_up"); 
-  producer_consumer_package *package = new producer_consumer_package; 
+
+
+  //producer_consumer_package *package = new producer_consumer_package; 
   
   
   scheduler_add_task(new terminalTask(PRIORITY_HIGH));
