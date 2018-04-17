@@ -15,6 +15,6 @@
   * [DFR0009 - Datasheet](https://github.com/jcook3701/CMPE146/blob/master/mp3_player/datasheets/ldc_shield/TC1602A-01T_SpecV00_2009_09_23.doc.pdf)
 
 4. Sparkfun Mp3 Player Shield
-  * [Schematic](https://github.com/jcook3701/CMPE146/blob/master/mp3_player/datasheets/sparkfun_mp3_player_shield/Schematic_MP3_Shield_v15.pdf)
+  * [Mp3 Player Shield Schematic](https://github.com/jcook3701/CMPE146/blob/master/mp3_player/datasheets/sparkfun_mp3_player_shield/Schematic_MP3_Shield_v15.pdf)
   * [VS1053b -Datasheet](https://github.com/jcook3701/CMPE146/blob/master/mp3_player/datasheets/sparkfun_mp3_player_shield/Datasheet_VS1053B.pdf)
-  * [Git](https://github.com/jcook3701/CMPE146/tree/master/mp3_player/datasheets/sparkfun_mp3_player_shield/MP3_Player_Shield-V_1.5)
+  * [Mp3 Player Shield Git](https://github.com/jcook3701/CMPE146/tree/master/mp3_player/datasheets/sparkfun_mp3_player_shield/MP3_Player_Shield-V_1.5)
