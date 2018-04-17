@@ -42,7 +42,7 @@ EventGroupHandle_t event_handler;
 //void consumer(void *p); /* MEDIUM priority */
 //void watchdog(void *p); /* HIGH priority */ 
 
-producer_task::producer_task() : scheduler_task("producer_task",  20 * 512, PRIORITY_MEDIUM)
+producer_task::producer_task() : scheduler_task("producer_task",  10 * 512, PRIORITY_MEDIUM)
 {
 }
 
@@ -71,14 +71,14 @@ bool producer_task::run(void *p)
   return true; 
 }
 
-consumer_task::consumer_task() : scheduler_task("consumer_task",  20 * 512, PRIORITY_MEDIUM)
+consumer_task::consumer_task() : scheduler_task("consumer_task",  10 * 512, PRIORITY_MEDIUM)
 {
 }
 
 bool consumer_task::run(void *p)
 {
   vTaskDelay(1000);
-  FILE *file0 = fopen("1:sensor_data.txt", "a");
+  FILE *file0;// = fopen("1:sensor_data.txt", "a");
   char word[128];
   char tmp[15]; 
   uint32_t received_value;
@@ -96,12 +96,12 @@ bool consumer_task::run(void *p)
     snprintf(tmp, sizeof(((float)xTaskGetTickCount())/portTICK_PERIOD_MS), "%f",((float)xTaskGetTickCount())/portTICK_PERIOD_MS);
     strcat(word, tmp);
     strcat(word, " temp: ");
-    snprintf(tmp, sizeof(received_value), "%lu", received_value);
+    snprintf(tmp, sizeof(received_value)-1, "%lu", received_value);
     strcat(word, tmp);
     strcat(word, "\n");
 
-    //    u0_dbg_printf("Consumer: word output: %s\n", word);
-    //    u0_dbg_printf("Consumer: line output - read from sd card: %s\n\n", line);
+    //    u0_dbg_printf("consumer: word output: %s\n", word);
+    //    u0_dbg_printf("consumer: line output - read from sd card: %s\n\n", line);
     if(count % 10 == 0){
       /*
 	because the producer only sends onece every 100ms if we wait ten times before writing
@@ -109,17 +109,21 @@ bool consumer_task::run(void *p)
       */
       file0 = fopen("1:sensor_data.txt", "a");
       if(file0){
-	fputs(word, file0);
+	fprintf(file0, "%s", word); 
+	//fputs(word, file0);
 	fgets(line, sizeof(line)-1, file0);
 	fclose(file0);
+      }
+      else{
+	u0_dbg_printf("error openning file0");
       }
       //file0 = fopen("1:sensor_data.txt", "a");
       //if(file0){
       ///	fclose(file0);
       //}
       u0_dbg_printf("-----\n");
-      u0_dbg_printf("Consumer: word output: %s\n", word);
-      u0_dbg_printf("Consumer: read from sd card: %s\n", line);
+      u0_dbg_printf("consumer: word output: %s\n", word);
+      u0_dbg_printf("consumer: read from sd card: %s\n", line);
       u0_dbg_printf("-----\n");
     }
     count++; 
@@ -130,7 +134,7 @@ bool consumer_task::run(void *p)
 
 }
 
-watchdog_task::watchdog_task() : scheduler_task("watchdog_task",  8 * 512, PRIORITY_HIGH)
+watchdog_task::watchdog_task() : scheduler_task("watchdog_task",  10 * 512, PRIORITY_HIGH)
 {
 }
 
@@ -138,8 +142,8 @@ bool watchdog_task::run(void *p)
 {
   vTaskDelay(1000);
   
-  FILE *file0 = fopen("1:watchdog_cpu_info.txt", "a");
-  FILE *file1 = fopen("1:watchdog_stuck_info.txt", "a");
+  FILE *file0;// = fopen("1:watchdog_cpu_info.txt", "a");
+  FILE *file1;// = fopen("1:watchdog_stuck_info.txt", "a");
   
   char word0[128];
   char word1[128];
@@ -149,11 +153,11 @@ bool watchdog_task::run(void *p)
   TickType_t xTicksToWait = 1000 / portTICK_PERIOD_MS;  //wait one second before acting
   bool one_second = false;
   uint32_t count = 0; 
-  //printf("CPU Usage : %i %%\n", getTaskCpuPercent());    /* get OUR tasks' cpu usage */  needs to happen every 60 seconds.  
+  //printf("cpu usage : %i %%\n", gettaskcpupercent());    /* get our tasks' cpu usage */  needs to happen every 60 seconds.  
   
   while(1){
     /*
-    if(xTaskGetTickCount()/portTICK_PERIOD_MS % 1000 == 0){
+    if(xtaskgettickcount()/porttick_period_ms % 1000 == 0){
       one_second = true;  
       }*/
     uxReturn = xEventGroupSync(event_handler, watchdog_flag, all_sync_bits, xTicksToWait);
@@ -161,45 +165,51 @@ bool watchdog_task::run(void *p)
     }
     else{
       one_second = false; 
-      if((uxReturn & producer_flag) != producer_flag){
-	//then producer_flag is low on uxReturn
-	strcpy(word1, "producer error!");
-	u0_dbg_printf("watchdog: %s\n", word1);
-	file1 = fopen("1:watchdog_stuck_info.txt", "a");
-	if(file1){
-	  fputs(word1, file1); 
-	  //fgets(line, sizeof(line)-1, file1);
-	  fclose(file1);
+      if((uxReturn & producer_flag) != producer_flag)
+	{
+	  //then producer_flag is low on uxreturn
+	  strcpy(word1, "producer error!");
+	  u0_dbg_printf("watchdog: %s\n", word1);
+	  file1 = fopen("1:watchdog_stuck_info.txt", "a");
+	  if(file1){
+	    fputs(word1, file1); 
+	    //fgets(line, sizeof(line)-1, file1);
+	    fclose(file1);
+	  }
+	}
+      if((uxReturn & consumer_flag) != consumer_flag)
+	{
+	  //then the consumer_flag is low on uxreturn
+	  strcpy(word1, "consumer error!");
+	  u0_dbg_printf("watchdog: %s\n", word1);
+	  file1 = fopen("1:watchdog_stuck_info.txt", "a");
+	  if(file1){
+	    fputs(word1, file1); 
+	    fgets(line, sizeof(line)-1, file1);
+	    fclose(file1);
+	  }
+	}  
+    }
+    //    if(xtaskgettickcount()/porttick_period_ms % 60000 == 0){
+    //6000
+    if(count == 60)
+      {
+	/* if count is equal to 6000 then the producer has run for a total time of 60,000ms or 60 secons */
+	count = 0; 
+	strcpy(word0, "cpu: ");
+	snprintf(tmp, sizeof(int), "%i\n", getTaskCpuPercent());
+	strcat(word0, tmp);
+	strcat(word0, "\n");
+	u0_dbg_printf("watchdog: %s\n", word0);
+	file0 = fopen("1:watchdog_cpu_info.txt", "a");
+	if(file0){
+	  //fprintf(file0, "%s", word0); 
+	  fputs(word0, file0); 
+	  fgets(line, sizeof(line)-1, file0);
+	  fclose(file0);
 	}
       }
-      if((uxReturn & consumer_flag) != consumer_flag){
-	//then the consumer_flag is low on uxReturn
-	strcpy(word1, "consumer error!");
-	u0_dbg_printf("watchdog: %s\n", word1);
-	file1 = fopen("1:watchdog_stuck_info.txt", "a");
-	if(file1){
-	  fputs(word1, file1); 
-	  fgets(line, sizeof(line)-1, file1);
-	  fclose(file1);
-	}
-      }
-    }
-    //    if(xTaskGetTickCount()/portTICK_PERIOD_MS % 60000 == 0){
-    if(count == 6000){
-      /* if count is equal to 6000 then the producer has run for a total time of 60,000ms or 60 secons */
-      count = 0; 
-      strcat(word0, "cpu: ");
-      snprintf(tmp, sizeof(getTaskCpuPercent()), "%i\n", getTaskCpuPercent());
-      strcat(word0, tmp);
-      u0_dbg_printf("watchdog: %s\n", word0);
-      file0 = fopen("1:watchdog_cpu_info.txt", "a");
-      if(file0){
-	fputs(word0, file0); 
-	fgets(line, sizeof(line)-1, file0);
-	fclose(file0);
-      }
-      count++; 
-    }
+    count++;
     /* Both bit 0 and bit 1 are set if this if statment runs  */
   };
   return true; 
