@@ -18,3 +18,11 @@
   * [Mp3 Player Shield - Schematic](https://github.com/jcook3701/CMPE146/blob/master/mp3_player/datasheets/sparkfun_mp3_player_shield/Schematic_MP3_Shield_v15.pdf)
   * [VS1053b -Datasheet](https://github.com/jcook3701/CMPE146/blob/master/mp3_player/datasheets/sparkfun_mp3_player_shield/Datasheet_VS1053B.pdf)
   * [Mp3 Player Shield - Git](https://github.com/jcook3701/CMPE146/tree/master/mp3_player/datasheets/sparkfun_mp3_player_shield/MP3_Player_Shield-V_1.5)
+
+5. SJSU One Board
+  * [SJ One Board - Wiki](http://socialledge.com/sjsu/index.php/SJ_One_Board)
+  * [LPC17xx - User Manual](https://github.com/kammce/SJSU-Dev/blob/master/datasheets/LPC17xx/LPC1758_UserManual.pdf)
+  * [LPC17xx - Electrical](https://github.com/kammce/SJSU-Dev/blob/master/datasheets/LPC17xx/LPC175x_Electrical.pdf)
+  
+# Code Base
+  * [Mac/ Linux Code base](https://github.com/kammce/SJSU-Dev/blob/master/README.md)
