@@ -1,4 +1,4 @@
-# MP3-Player - CMPE 146 Final Project
+# Mp3 Player - CMPE 146 Final Project
 
 # Parts
 1. AN97055 (Bi-directional level shifter for I2C-bus and other systems)
