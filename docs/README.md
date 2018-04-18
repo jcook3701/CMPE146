@@ -2,7 +2,7 @@
 
 # Parts
 1. AN97055 (Bi-directional level shifter for I2C-bus and other systems)
-  * [AN97055 - DataSheet](/CMPE146/blob/master/docs/mp3_player/datasheets/Bi-directional_level_shifter%20/AN97055.pdf)
+  * [AN97055 - DataSheet]({{ site.baseurl }}{{/docs/mp3_player/datasheets/Bi-directional_level_shifter%20/AN97055.pdf}})
 
 2. Adafruit 5v Trinet
   * [5V Trinet - Schematic](https://github.com/jcook3701/CMPE146/blob/master/mp3_player/datasheets/adafruit_trinket_5v/adafruit_products_trinket5V.pdf)
