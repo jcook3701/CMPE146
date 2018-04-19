@@ -25,7 +25,7 @@
   * [LPC17xx - Electrical]({{ "/assets/datasheets/sjsu_one_board/LPC175x_Electrical.pdf" | absolute_url }})
 
 # Schematic
-1. MP3 player Project 
+1. MP3 Project 
   * [mp3 player project - schematic]({{ "/assets/datasheets/mp3_project_schematic/mp3_project.pdf" | absolute_url  }})
   
 ![mp3 player schematic]({{ "/assets/datasheets/mp3_project_schematic/mp3_project.jpg" | absolute_url  }})
