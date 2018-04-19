@@ -1,3 +1,10 @@
+---
+layout: post
+title:  "mp3 player"
+date:   2018-04-18 09:41:09
+author: Jekyll
+---
+
 # Mp3 Player - CMPE 146 Final Project
 
 # Parts
