@@ -12,7 +12,7 @@
  
 3. DFR0009 LCD Keypad Shield
   * [Keypad Shield - Schematic]({{ "/assets/datasheets/ldc_shield/LCDKeypad_Shield_SCH.pdf" | absolute_url }})
-  * [DFR0009 - Datasheet]({{ "/assets/datasheets/ldc_shield/TC1602A_01T_SpecV00_2009_09_23.doc.pdf" | absolute_url }})
+  * [DFR0009 - Datasheet]({{ "/assets/datasheets/ldc_shield/TC1602A_01T_SpecV00_2009_09_23.pdf" | absolute_url }})
 
 4. Sparkfun Mp3 Player Shield
   * [Mp3 Player Shield - Schematic]({{ "/assets/datasheets/sparkfun_mp3_player_shield/Schematic_MP3_Shield_v15.pdf" | absolute_url }} )
@@ -25,7 +25,9 @@
   * [LPC17xx - Electrical]({{ "/assets/datasheets/sjsu_one_board/LPC175x_Electrical.pdf" | absolute_url }})
 
 # Schematic
-[mp3 player project - schematic]({{ "/assets/datasheets/mp3_project_schematic/mp3_project.pdf" | absolute_url  }})
+1. MP3 player Project 
+  * [mp3 player project - schematic]({{ "/assets/datasheets/mp3_project_schematic/mp3_project.pdf" | absolute_url  }})
+  
 ![mp3 player schematic]({{ "/assets/datasheets/mp3_project_schematic/mp3_project.jpg" | absolute_url  }})
 
 
