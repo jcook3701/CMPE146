@@ -1,7 +1,7 @@
 # Mp3 Player - CMPE 146 Final Project
 
 # Schematic
-![mp3 player schematic]({{ "/assets/datasheets/mp3_project_schematic/mp3_project.pdf" | absolute_url  }})
+![mp3 player schematic]({{ "/assets/datasheets/mp3_project_schematic/mp3_project.jpg" | absolute_url  }})
 
 # Parts
 1. AN97055 (Bi-directional level shifter for I2C-bus and other systems)
