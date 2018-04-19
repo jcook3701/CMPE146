@@ -3,54 +3,101 @@ layout: default
 ---
 
 <div class="header-container jumbotron">
-    <div class="container">
-        <h1>mp3 player</h1>
-        <p>Group members: Jared Cook, Peter Stapelton, & Arslan Idrees</p>
-    </div>
+  <div class="container">
+    <h1>mp3 player</h1>
+    <p><strong>Group members:</strong> Jared Cook, Peter Stapelton, & Arslan Idrees</p>
+  </div>
 </div>
 
 
 <div class="container">
-
-    <div class="row">
-        <div class="col-md-6">
-          <h2 class="header-light regular-pad">Project Summary</h2>
-            <blockquote>
-              <p>The goal of this project is to create a fully functional MP3 music player using SJOne Microcontroller board as the source for music and control. MP3 files will be present on an SD card. SJOne board reads these files and transfers data to a audio decoding peripheral for generating music. User would be able to use player controls (start/stop/pause) for playing MP3 songs and view the track information on a display.
-	      </p>
-	      <img src="img/Mp3_player_block_diagram.png" alt="" class="img-responsive">
-	      <p> 
-            </blockquote>
-	    <h2 class="header-light regular-pad"> Project Requirements</h2>
-        </div>
-        <div class="col-md-6 text-center">
-            <img src="img/jekyll-dark.png" alt="" class="img-responsive">
-        </div>
+  
+  <div class="row">
+    <div class="col-md-6">
+      <h2 class="header-light regular-pad">Project Summary</h2>
+      <blockquote>
+        <p>The goal of this project is to create a fully functional MP3 music player using SJOne Microcontroller board as the source for music and control. MP3 files will be present on an SD card. SJOne board reads these files and transfers data to a audio decoding peripheral for generating music. User would be able to use player controls (start/stop/pause) for playing MP3 songs and view the track information on a display.
+	</p>
+      </blockquote>
+      <h2 class="header-light regular-pad"> Project Requirements</h2>
+      <h3 class="header-light regular-pad"> Non-Functional Requirements:</h3>
+      <blockquotes>
+	<p>
+	  <ul>
+	    <li>Should be dynamic.
+	      <ul>
+		<li>As in, you should be able to add more songs and play them</li>
+	      </ul>
+	    </li>
+	    <li>Should be accurate.
+	      <ul>
+		<li>Audio should not sound distorted,</li>
+		<li>Audio should not sound slower or faster when running on your system.</li>
+	      </ul>
+	    </li>
+	    <li>Should be user friendly.
+	      <ul>
+		<li>User should be able to figure out how to use the device without a user manual.</li>
+		<li>Product must be packaged in some enclosure. No wires can be vision for the project.</li>
+	      </ul>
+	    </li>
+	  </ul>	
+	</p>
+      </blockquotes>
+      <h3 class="header-light regular-pad"> Functional Requirements:</h3>
+      <blockquotes>
+	<p>
+	  <ul>
+	    <li>System must use the SJOne on board SD card to read MP3 audio files.</li>
+	    <li>System must communicate to an external MP3 decoder</li>
+	    <li>System must allow users to control the MP3 player (You may use the onboard buttons for this)
+	      <ul>
+		<li>User must be able to play and pause of song</li>
+		<li>user must be able to select a song</li>
+	      </ul>
+	    </li>
+	    <li>System must use an external display to show a menu providing the following information:
+	      <ul>
+		<li>Current playing song</li>
+		<li>Information about current playing song</li>
+		<li>Menu showing how to select a different song</li>
+		<li>(Not all of the above need to be shown on the same display)</li>
+	      </ul>
+	    </li>
+	    <li>System software must separated into tasks. EX: Display task, MP3 Read Task, Controller Task etc...</li>
+	    <li>System software must be thread safe always.</li>
+	    <li>System software must use OS structures and primitives where applicable.</li>
+	    <li>System software may only utilize 50% or less CPU</li>
+	</p>
+      </blockquotes>
     </div>
-
-    <hr>
-
-    <div class="row">
-        <div class="col-sm-4">
-            <h1 class="text-center"><i class="fa fa-pencil" aria-hidden="true"></i></h1>
-            <h3 class="text-center">Easy to install and publish</h3>
-            <p>Get started by cloning source into GitHub account of your project. Thanks to <a href="https://pages.github.com">GitHub Pages</a>,
-              it will be automatically compiled and published under your project's subdomain on `github.io`.
-            </p>
-        </div>
-        <div class="col-sm-4">
-            <h1 class="text-center"><i class="fa fa-cogs" aria-hidden="true"></i></h1>
-            <h3 class="text-center">Modular Styling and Templating</h3>
-            <p>This template uses <a href="https://github.com/twbs/bootstrap-sass">bootstrap-sass</a> along with <a href="https://bootswatch.com/">Bootwatch themes</a>.
-            You can change the theme or write your custom by overwriting bootstrap sass variables for a different color set, font options, etc.</p>
-        </div>
-        <div class="col-sm-4">
-            <h1 class="text-center"><i class="fa fa-code-fork" aria-hidden="true"></i></h1>
-            <h3 class="text-center">Git-based source control</h3>
-            <p>Leverage from Git version control system by
-              maintaining your documentation along with the source code; publish the page when you merge to the master branch.</p>
-        </div>
+    <div class="col-md-6 text-center">
+      <img src="img/Mp3_player_block_diagram.png" alt="" class="img-responsive">
     </div>
-
-
+  </div>
+  
+  <hr>
+  
+  <div class="row">
+    <div class="col-sm-4">
+      <h1 class="text-center"><i class="fa fa-pencil" aria-hidden="true"></i></h1>
+      <h3 class="text-center">Easy to install and publish</h3>
+      <p>Get started by cloning source into GitHub account of your project. Thanks to <a href="https://pages.github.com">GitHub Pages</a>,
+        it will be automatically compiled and published under your project's subdomain on `github.io`.
+      </p>
+    </div>
+    <div class="col-sm-4">
+      <h1 class="text-center"><i class="fa fa-cogs" aria-hidden="true"></i></h1>
+      <h3 class="text-center">Modular Styling and Templating</h3>
+      <p>This template uses <a href="https://github.com/twbs/bootstrap-sass">bootstrap-sass</a> along with <a href="https://bootswatch.com/">Bootwatch themes</a>.
+        You can change the theme or write your custom by overwriting bootstrap sass variables for a different color set, font options, etc.</p>
+    </div>
+    <div class="col-sm-4">
+      <h1 class="text-center"><i class="fa fa-code-fork" aria-hidden="true"></i></h1>
+      <h3 class="text-center">Git-based source control</h3>
+      <p>Leverage from Git version control system by
+        maintaining your documentation along with the source code; publish the page when you merge to the master branch.</p>
+    </div>
+  </div>
+  
 </div>
