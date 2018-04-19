@@ -1,4 +1,5 @@
-theme: jekyll-theme-slate
+#theme: jekyll-theme-slate
+remote_theme: chrisbobbe/jekyll-theme-prologue
 baseurl: /CMPE146
 repository: jcook371/CMPE146
 
