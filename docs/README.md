@@ -1,11 +1,11 @@
 # Mp3 Player - CMPE 146 Final Project
 
 # Schematic
-![mp3 player schematic]({{ "assets/datasheets/mp3_project_schematic/mp3_project.pdf" | absolute_url  }})
+![mp3 player schematic]({{ "/assets/datasheets/mp3_project_schematic/mp3_project.pdf" | absolute_url  }})
 
 # Parts
 1. AN97055 (Bi-directional level shifter for I2C-bus and other systems)
-  * [AN97055 - DataSheet]({{ "/mp3_player/datasheets/Bi-directional_level_shifter/AN97055.pdf" | absolute_url }})
+  * [AN97055 - DataSheet]({{ "/assets/datasheets/Bi-directional_level_shifter/AN97055.pdf" | absolute_url }})
 
 2. Adafruit 5v Trinet
   * [5V Trinet - Schematic]({{ "/assets/datasheets/adafruit_trinket_5v/adafruit_products_trinket5V.pdf" | absolute_url }})
@@ -24,8 +24,8 @@
 
 5. SJSU One Board
   * [SJ One Board - Wiki](http://socialledge.com/sjsu/index.php/SJ_One_Board)
-  * [LPC17xx - User Manual](https://github.com/kammce/SJSU-Dev/blob/master/datasheets/LPC17xx/LPC1758_UserManual.pdf)
-  * [LPC17xx - Electrical](https://github.com/kammce/SJSU-Dev/blob/master/datasheets/LPC17xx/LPC175x_Electrical.pdf)
+  * [LPC17xx - User Manual]({{ "/assets/datasheets/sjsu_one_board/LPC1758_UserManual.pdf" | absolute_url }})
+  * [LPC17xx - Electrical]({{ "/assets/datasheets/sjsu_one_board/LPC175x_Electrical.pdf" | absolute_url }})
   
 # Code Base
   * [Mac/ Linux Code base](https://github.com/kammce/SJSU-Dev/blob/master/README.md)
