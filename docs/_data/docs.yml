@@ -1,9 +1,9 @@
 - title: mp3 player
   docs:
   - datasheets_and_schematics
-  - home
-  - themes
-  - customization
+#  - home
+#  - themes
+#  - customization
 
 - title: Examples
   docs:
