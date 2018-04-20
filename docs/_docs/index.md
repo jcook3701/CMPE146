@@ -1,248 +1,39 @@
 ---
-title: Themes
-permalink: /docs/themes/
+title: "Datasheets & Schematics"
+permalink: /docs/datasheets_and_schematics/
+redirect_from: /docs/index.html
 ---
 
-By default, this website uses `paper` theme, but you can change it to another [bootwatch theme](https://bootswatch.com/3/) by setting
-`bootwatch` variable in `_config.yml` file.
-(Don't forget to restart `Jekyll` if you are running locally because the configuration is not re-read upon change.)
+# Parts
+1. AN97055 (Bi-directional level shifter for I2C-bus and other systems)
+  * [AN97055 - DataSheet]({{ "/assets/datasheets/Bi-directional_level_shifter/AN97055.pdf" | absolute_url }})
 
-<div class="row">
+2. Adafruit 5v Trinet
+  * [5V Trinet - Schematic]({{ "/assets/datasheets/adafruit_trinket_5v/adafruit_products_trinket5V.pdf" | absolute_url }})
+  * [ATtiny85 - Datasheet]({{ "/assets/datasheets/adafruit_trinket_5v/Atmel_ATtiny25_ATtiny45_ATtiny85_Datasheet.pdf" | absolute_url }})
+  * [ATtiny85 -Datasheet Summary]({{ "/assets/datasheets/adafruit_trinket_5v/ATtiny25_ATtiny45_ATtiny85_Datasheet_Summary.pdf" | absolute_url }})
+  * [MIC5225 - Datasheet]({{ "/assets/datasheets/adafruit_trinket_5v/Microsoft_Word_MIC5225.pdf" | absolute_url }})
+ 
+3. DFR0009 LCD Keypad Shield
+  * [Keypad Shield - Schematic]({{ "/assets/datasheets/ldc_shield/LCDKeypad_Shield_SCH.pdf" | absolute_url }})
+  * [DFR0009 - Datasheet]({{ "/assets/datasheets/ldc_shield/TC1602A_01T_SpecV00_2009_09_23.pdf" | absolute_url }})
 
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#cerulean/"><img src="https://bootswatch.com/3/cerulean/thumbnail.png" class="img-responsive" alt="Cerulean"></a>
-      </div>
-      <div class="caption">
-        <h3>Cerulean</h3>
-        <p>A calm blue sky</p>
-      </div>
-    </div>
-  </div>
+4. Sparkfun Mp3 Player Shield
+  * [Mp3 Player Shield - Schematic]({{ "/assets/datasheets/sparkfun_mp3_player_shield/Schematic_MP3_Shield_v15.pdf" | absolute_url }} )
+  * [VS1053b -Datasheet]({{ "/assets/datasheets/sparkfun_mp3_player_shield/Datasheet_VS1053B.pdf" | absolute_url }})
+  * [Mp3 Player Shield - Git]({{ "/assets/datasheets/sparkfun_mp3_player_shield/MP3_Player_Shield-V_1.5" | absolute_url }})
 
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#cosmo/"><img class="img-responsive" src="https://bootswatch.com/3/cosmo/thumbnail.png" alt="Cosmo"></a>
-      </div>
-      <div class="caption">
-        <h3>Cosmo</h3>
-        <p>An ode to Metro</p>
-      </div>
-    </div>
-  </div>
+5. SJSU One Board
+  * [SJ One Board - Wiki](http://socialledge.com/sjsu/index.php/SJ_One_Board)
+  * [LPC17xx - User Manual]({{ "/assets/datasheets/sjsu_one_board/LPC1758_UserManual.pdf" | absolute_url }})
+  * [LPC17xx - Electrical]({{ "/assets/datasheets/sjsu_one_board/LPC175x_Electrical.pdf" | absolute_url }})
 
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#cyborg/"><img class="img-responsive" src="https://bootswatch.com/3/cyborg/thumbnail.png" alt="Cyborg"></a>
-      </div>
-      <div class="caption">
-        <h3>Cyborg</h3>
-        <p>Jet black and electric blue</p>
+# Schematic
+1. MP3 Project 
+  * [mp3 player project - Schematic]({{ "/assets/datasheets/mp3_project_schematic/mp3_project.pdf" | absolute_url  }})
+  
+![mp3 player schematic]({{ "/assets/datasheets/mp3_project_schematic/mp3_project.jpg" | absolute_url  }})
 
 
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#darkly/"><img class="img-responsive" src="https://bootswatch.com/3/darkly/thumbnail.png" alt="Darkly"></a>
-      </div>
-      <div class="caption">
-        <h3>Darkly</h3>
-        <p>Flatly in night mode</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#flatly/"><img class="img-responsive" src="https://bootswatch.com/3/flatly/thumbnail.png" alt="Flatly"></a>
-      </div>
-      <div class="caption">
-        <h3>Flatly</h3>
-        <p>Flat and modern</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#journal/"><img class="img-responsive" src="https://bootswatch.com/3/journal/thumbnail.png" alt="Journal"></a>
-      </div>
-      <div class="caption">
-        <h3>Journal</h3>
-        <p>Crisp like a new sheet of paper</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#lumen/"><img src="https://bootswatch.com/3/lumen/thumbnail.png" class="img-responsive" alt="Lumen"></a>
-      </div>
-      <div class="caption">
-        <h3>Lumen</h3>
-        <p>Light and shadow</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#paper/"><img class="img-responsive" src="https://bootswatch.com/3/paper/thumbnail.png" alt="Paper"></a>
-      </div>
-      <div class="caption">
-        <h3>Paper</h3>
-        <p>Material is the metaphor</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#readable/"><img class="img-responsive" src="https://bootswatch.com/3/readable/thumbnail.png" alt="Readable"></a>
-      </div>
-      <div class="caption">
-        <h3>Readable</h3>
-        <p>Optimized for legibility</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#sandstone/"><img src="https://bootswatch.com/3/sandstone/thumbnail.png" class="img-responsive" alt="Sandstone"></a>
-      </div>
-      <div class="caption">
-        <h3>Sandstone</h3>
-        <p>A touch of warmth</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#simplex/"><img class="img-responsive" src="https://bootswatch.com/3/simplex/thumbnail.png" alt="Simplex"></a>
-      </div>
-      <div class="caption">
-        <h3>Simplex</h3>
-        <p>Mini and minimalist</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#slate/"><img class="img-responsive" src="https://bootswatch.com/3/slate/thumbnail.png" alt="Slate"></a>
-      </div>
-      <div class="caption">
-        <h3>Slate</h3>
-        <p>Shades of gunmetal gray</p>
-
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#solar/"><img class="img-responsive" src="https://bootswatch.com/solar/thumbnail.png" alt="Solar"></a>
-      </div>
-      <div class="caption">
-        <h3>Solar</h3>
-        <p>A spin on Solarized</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#spacelab/"><img class="img-responsive" src="https://bootswatch.com/3/spacelab/thumbnail.png" alt="Spacelab"></a>
-      </div>
-      <div class="caption">
-        <h3>Spacelab</h3>
-        <p>Silvery and sleek</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#superhero/"><img class="img-responsive" src="https://bootswatch.com/3/superhero/thumbnail.png" alt="Superhero"></a>
-      </div>
-      <div class="caption">
-        <h3>Superhero</h3>
-        <p>The brave and the blue</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#united/"><img class="img-responsive" src="https://bootswatch.com/3/united/thumbnail.png" alt="United"></a>
-      </div>
-      <div class="caption">
-        <h3>United</h3>
-        <p>Ubuntu orange and unique font</p>
-
-
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-4 col-sm-6">
-    <div class="thumbnail">
-      <div class="image">
-        <a href="#yeti/"><img class="img-responsive" src="https://bootswatch.com/3/yeti/thumbnail.png" alt="Yeti"></a>
-      </div>
-      <div class="caption">
-        <h3>Yeti</h3>
-        <p>A friendly foundation</p>
-
-
-      </div>
-    </div>
-  </div>
-
-
-</div>
+# Code Base
+  * [Mac/ Linux Code base](https://github.com/kammce/SJSU-Dev/blob/master/README.md)
