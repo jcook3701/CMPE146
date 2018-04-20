@@ -12,7 +12,7 @@ redirect_from: /docs/index.html
   * [5V Trinet - Schematic]({{ "/img/datasheets/adafruit_trinket_5v/adafruit_products_trinket5V.pdf" | absolute_url }})
   * [ATtiny85 - Datasheet]({{ "/img/datasheets/adafruit_trinket_5v/Atmel_ATtiny25_ATtiny45_ATtiny85_Datasheet.pdf" | absolute_url }})
   * [ATtiny85 -Datasheet Summary]({{ "/img/datasheets/adafruit_trinket_5v/ATtiny25_ATtiny45_ATtiny85_Datasheet_Summary.pdf" | absolute_url }})
-  * [MIC5225 - Datasheet]({{ "/assets/datasheets/adafruit_trinket_5v/Microsoft_Word_MIC5225.pdf" | absolute_url }})
+  * [MIC5225 - Datasheet]({{ "/img/datasheets/adafruit_trinket_5v/Microsoft_Word_MIC5225.pdf" | absolute_url }})
  
 3. DFR0009 LCD Keypad Shield
   * [Keypad Shield - Schematic]({{ "/img/datasheets/ldc_shield/LCDKeypad_Shield_SCH.pdf" | absolute_url }})
