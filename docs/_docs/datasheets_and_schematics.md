@@ -1,8 +1,6 @@
 ---
-layout: post
-title:  "mp3 player"
-date:   2018-04-18 09:41:09
-author: Jekyll
+title:  "Datasheets & Schematics"
+permalink: /docs/datasheets_and_schematics/
 ---
 
 # Mp3 Player - CMPE 146 Final Project
