@@ -5,7 +5,7 @@ permalink: /docs/datasheets_and_schematics/
 
 # Parts
 1. AN97055 (Bi-directional level shifter for I2C-bus and other systems)
-  * [AN97055 - DataSheet]({{ "/assets/datasheets/Bi-directional_level_shifter/AN97055.pdf" }})
+  * [AN97055 - DataSheet]({{ "/assets/datasheets/Bi-directional_level_shifter/AN97055.pdf" | absolute_url }})
 
 2. Adafruit 5v Trinet
   * [5V Trinet - Schematic]({{ "/assets/datasheets/adafruit_trinket_5v/adafruit_products_trinket5V.pdf" | absolute_url }})

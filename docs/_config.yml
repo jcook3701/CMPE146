@@ -6,7 +6,7 @@ description: >
   providing documentation and blog post pages.
 
 baseurl: "/CMPE146"
-url: https://jcook3701.github.io/CMPE146
+#url: https://jcook3701.github.io/CMPE146
 git_address: https://github.com/jcook3701/CMPE146
 git_edit_address: https://github.com/jcook3701/CMPE146/blob/master
 
