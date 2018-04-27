@@ -22,20 +22,20 @@ bool LabSPI::init(Peripheral peripheral, uint8_t data_size_select, FrameModes fo
     const uint8_t ssp1_clk   = 20;  // LPC_SC->PCLKSEL0 - pins 21:20
     
     //ssp0
-    const uint8_t gpio_cs0   = 0;   //LPC_PINCON->PINSEL1 - pins 1:0
+    //const uint8_t gpio_cs0   = 0;   //LPC_PINCON->PINSEL1 - pins 1:0
     const uint8_t sclk0      = 30;  //LPC_PINCON->PINSEL0 - pins 31:30
     const uint8_t miso0      = 2;   //LPC_PINCON->PINSEL1 - pins 3:2
     const uint8_t mosi0      = 4;   //LPC_PINCON->PINSEL1 - pins 5:4
     
     //ssp1
-    const uint8_t gpio_cs1   = 12;  //LPC_PINCON->PINSEL0 - pins 13:12
+    //const uint8_t gpio_cs1   = 12;  //LPC_PINCON->PINSEL0 - pins 13:12
     const uint8_t sclk1      = 14;  //LPC_PINCON->PINSEL0 - pins 15:14
     const uint8_t miso1      = 16;  //LPC_PINCON->PINSEL0 - pins 17:16
     const uint8_t mosi1      = 18;  //LPC_PINCON->PINSEL0 - pins 19:18
 
     // Functionality for SSP pins
     const uint8_t clear_two_bits = 0x3; 
-    const uint8_t gpio_fun       = 0x0;
+    //const uint8_t gpio_fun       = 0x0;
     const uint8_t sclk_fun       = 0x2; 
     const uint8_t miso_fun       = 0x2;
     const uint8_t mosi_fun       = 0x2;
@@ -92,8 +92,8 @@ bool LabSPI::init(Peripheral peripheral, uint8_t data_size_select, FrameModes fo
     const uint8_t dss = 0;
     const uint8_t clock_prescale_register = 0; 
     const uint8_t frame_format = 4;
-    const uint8_t cpol = 6;
-    const uint8_t cpha = 7;
+    //const uint8_t cpol = 6;
+    //const uint8_t cpha = 7;
 
     //---------------Contrl Register 1-----------------//
     //Data Size Select
