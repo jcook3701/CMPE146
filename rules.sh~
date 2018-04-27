@@ -1,5 +1,0 @@
-#rules.sh environment variable template file
-#Do not include any ("quotation marks") in this file
-
-USER_DRIVER_DIR=
-USER_MAIN_DIR=

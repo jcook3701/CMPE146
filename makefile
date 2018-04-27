@@ -35,6 +35,7 @@ UART_MAIN := main_uart.cpp
 I2C_MAIN  := main_i2c.cpp
 PRODUCER_CONSUMER_MAIN := main_producer_consumer.cpp
 WATCHDOG_MAIN := main_watchdog.cpp
+MP3_MAIN := main_mp3.cpp
 
 # Local Git Dirs
 ADC       := adc_driver
@@ -47,6 +48,7 @@ I2C       := i2c_driver
 PRODUCER_CONSUMER := free_rtos_producer_consumer
 DEFAULT := default_build
 WATCHDOG := watchdog_driver
+MP3 := mp3_player
 
 .PHONY: help template build destroy adc pwm spi gpio eint uart i2c delete_main test
 
@@ -65,27 +67,29 @@ help:
 	$V echo "|      currently enabled.                                                                   |"
 	$V echo "|  4. default_main :                                                                        |"
 	$V echo "|     - Links preets main.cpp to USER_MAIN_DIR.                                             |"
-	$V echo "|  5. adc:                                                                                  |"
+	$V echo "|  5. mp3 :                                                                                 |"
+	$V echo "|     - Links main_mp3.cpp to USER_MAIN_DIR.                                                |"
+	$V echo "|  6. adc:                                                                                  |"
 	$V echo "|     - Links main_adc.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  6. pwm:                                                                                  |"
+	$V echo "|  7. pwm:                                                                                  |"
 	$V echo "|     - Links main_adc.pwm to USER_MAIN_DIR.                                                |"
-	$V echo "|  7. spi:                                                                                  |"
+	$V echo "|  8. spi:                                                                                  |"
 	$V echo "|     - Links main_spi.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  8. gpio:                                                                                 |"
+	$V echo "|  9. gpio:                                                                                 |"
 	$V echo "|     - Links main_gpio.cpp to USER_MAIN_DIR.                                               |"
-	$V echo "|  9. eint:                                                                                 |"
+	$V echo "|  10. eint:                                                                                |"
 	$V echo "|     - Links main_eint.cpp to USER_MAIN_DIR.                                               |"
-	$V echo "|  10. uart:                                                                                |"
+	$V echo "|  11. uart:                                                                                |"
 	$V echo "|     - Links main_uart.cpp to USER_MAIN_DIR.                                               |"
-	$V echo "|  11. i2c:                                                                                 |"
+	$V echo "|  12. i2c:                                                                                 |"
 	$V echo "|     - Links main_i2c.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  12. watchdog:                                                                            |"
+	$V echo "|  13. watchdog:                                                                            |"
 	$V echo "|     - Links main_watchdog.cpp to USER_MAIN_DIR                                            |"
-	$V echo "|  13. producer_consumer:                                                                   |"
+	$V echo "|  14. producer_consumer:                                                                   |"
 	$V echo "|     - Links main_producer_consumer.cpp to USER_MAIN_DIR                                   |"
-	$V echo "|  14. delete_main:                                                                         |"
+	$V echo "|  15. delete_main:                                                                         |"
 	$V echo "|     - Deletes any links to USER_MAIN_DIR.                                                 |"
-	$V echo "|  15. test:                                                                                |"
+	$V echo "|  16. test:                                                                                |"
 	$V echo "|     - Prints the values of USER_DRIVER_DIR & USER_MAIN_DIR from rules.sh file.            |"
 	$V echo "|                                                                                           |"
 	$V echo "|  For further information reference the README.md file located in this project.            |"
@@ -129,6 +133,7 @@ endif
 	$V [ -d "$(USER_DRIVER_DIR)/$(WATCHDOG)" ] || (mkdir $(USER_DRIVER_DIR)/$(WATCHDOG))
 	$V [ ! -d "$(USER_DRIVER_DIR)/$(WATCHDOG)" ] || (ln -s $(PWD)/$(WATCHDOG)/wat* $(USER_DRIVER_DIR)/$(WATCHDOG))
 
+
 # Will destroy links for user from the path specified in generated template file specified in $(IMPORT_FILE).
 # If you want it to be easy to destroy links don't delete template files after creation.  Keep them and generate new templates
 # if you happen to need links to these drivers in other locations.
@@ -153,6 +158,13 @@ ifeq ($(FILE_SET),0)
 endif
 	@echo "Bulinding link for main.cpp"
 	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(DEFAULT)/$(MAIN) $(USER_MAIN_DIR)/$(MAIN))
+
+mp3:
+ifeq ($(FILE_SET),0)
+	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
+endif
+	@echo "Bulinding link for main.cpp"
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(MP3)/$(MP3_MAIN) $(USER_MAIN_DIR)/$(MAIN))
 
 adc:
 ifeq ($(FILE_SET),0)
