@@ -143,11 +143,9 @@ $V echo "|                                                                      
 $V echo "|  For further information reference the README.md file located in this project.            |"
 $V echo "---------------------------------------------------------------------------------------------"
 ```
-How to git
-
-
+- How to git
+```
 step 1) At direcotry head. If added file... git add .
-
 step 2) git commit . -m "some messsage"
-
 setp 3) git push
+```
