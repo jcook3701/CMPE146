@@ -1,9 +1,9 @@
-#include <stdio.h>
-#include "task.h"
-#include <stdint.h>
 #include "FreeRTOS.h"
+#include "task.h"
+#include <stdio.h>
+#include <stdint.h>
 #include "LPC17xx.h"
-#include "sempr.h"
+#include "semphr.h"
 #include "printf_lib.h"
 
 #include "gpioStruct.hpp"
@@ -203,10 +203,10 @@ int main(int argc, char const *argv[])
     
     //Declare SSP0//
     LabSPI *mySSP0 = new LabSPI();
-    mySSP0->init(mySSP0->SSP0, eight_bit, mySSP0->SP0, 4); //MOSI0
-    mySSP0->init(mySSP0->SSP0, eight_bit, mySSP0->SP0, 2); //MISO0
-    mySSP0->init(mySSP0->SSP0, eight_bit, mySSP0->SP0, 0); //CS0
-    mySSP0->init(mySSP0->SSP0, eight_bit, mySSP0->SP0, 30); //SCLK0
+    mySSP0->init(mySSP0->SSP0, eight_bit, mySSP0->SPI, 4); //MOSI0
+    mySSP0->init(mySSP0->SSP0, eight_bit, mySSP0->SPI, 2); //MISO0
+    mySSP0->init(mySSP0->SSP0, eight_bit, mySSP0->SPI, 0); //CS0
+    mySSP0->init(mySSP0->SSP0, eight_bit, mySSP0->SPI, 30); //SCLK0
     
     
     //GPIO Initialization//
@@ -214,57 +214,57 @@ int main(int argc, char const *argv[])
     GPIO_Package * vRead_Switch_package1 = new GPIO_Package;
     
     //P1.30, mp3_dreq
-    vRead_Switch_package0.port = 1;
-    vRead_Switch_package0.pin = 30;
+    vRead_Switch_package0->port = 1;
+    vRead_Switch_package0->pin = 30;
     vRead_Switch_package0->globalVar = &button_push_flag0;
 
     //P1.29, mp3_rst
-    vRead_Switch_package0.port = 1;
-    vRead_Switch_package0.pin = 29;
+    vRead_Switch_package0->port = 1;
+    vRead_Switch_package0->pin = 29;
     
     //P1.28, led_backlit_control
-    vRead_Switch_package0.port = 1;
-    vRead_Switch_package0.pin = 28;
+    vRead_Switch_package0->port = 1;
+    vRead_Switch_package0->pin = 28;
     
     //P1.23, led_enable
-    vRead_Switch_package0.port = 1;
-    vRead_Switch_package0.pin = 23;
+    vRead_Switch_package0->port = 1;
+    vRead_Switch_package0->pin = 23;
     
     //P1.22, led_rs_rw
-    vRead_Switch_package0.port = 1;
-    vRead_Switch_package0.pin = 22;
+    vRead_Switch_package0->port = 1;
+    vRead_Switch_package0->pin = 22;
 
     //P1.20, led_d7
-    vRead_Switch_package0.port = 1;
-    vRead_Switch_package0.pin = 20;
+    vRead_Switch_package0->port = 1;
+    vRead_Switch_package0->pin = 20;
     
     //P1.19, led_d6
-    vRead_Switch_package0.port = 1;
-    vRead_Switch_package0.pin = 19;
+    vRead_Switch_package0->port = 1;
+    vRead_Switch_package0->pin = 19;
     
     //P0.30, led_d5
-    vRead_Switch_package0.port = 0;
-    vRead_Switch_package0.pin = 30;
+    vRead_Switch_package0->port = 0;
+    vRead_Switch_package0->pin = 30;
     
     //P0.29, led_d4
-    vRead_Switch_package0.port = 0;
-    vRead_Switch_package0.pin = 29;
+    vRead_Switch_package0->port = 0;
+    vRead_Switch_package0->pin = 29;
     
     //P2.0, led_backlit_control
-    vRead_Switch_package0.port = 2;
-    vRead_Switch_package0.pin = 0;
+    vRead_Switch_package0->port = 2;
+    vRead_Switch_package0->pin = 0;
     
     //P0.1, mp3_cs
-    vRead_Switch_package0.port = 0;
-    vRead_Switch_package0.pin = 1;
+    vRead_Switch_package0->port = 0;
+    vRead_Switch_package0->pin = 1;
     
     //P0.0, mp3_dcs
-    vRead_Switch_package0.port = 0;
-    vRead_Switch_package0.pin = 0;
+    vRead_Switch_package0->port = 0;
+    vRead_Switch_package0->pin = 0;
     
     
     
-    u0_dbg_printf("SSPI: %i, FORMAT: %i\n", mySSP1->SSP1, mySSP1->SPI);
+    //    u0_dbg_printf("SSPI: %i, FORMAT: %i\n", mySSP1->SSP1, mySSP1->SPI);
 
     
     xTaskCreate(task_sig_reader, "sig_reader", STACK_SIZE, (void *)spi_package, 1 | portPRIVILEGE_BIT, NULL );
