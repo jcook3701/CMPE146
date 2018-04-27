@@ -68,6 +68,7 @@ make build_links IMPORT_FILE= #FILE
 Step 5) Create your main.cpp sym-link from any of the driver folders.
 - Only single one of the driver main files can be linked to the USER_MAIN_DIR location at a single time. If you intened to link a new main.cpp file to your USER_MAIN_DIR location you must first user the "make delete_main" command. 
 ```
+make mp3
 make adc
 make pwm
 make spi
@@ -114,27 +115,29 @@ $V echo "|    - Destroys soft-links from this git project. Specificity for the t
 $V echo "|      currently enabled.                                                                   |"
 $V echo "|  4. default_main :                                                                        |"
 $V echo "|     - Links preets main.cpp to USER_MAIN_DIR.                                             |"
-$V echo "|  5. adc:                                                                                  |"
+$V echo "|  5. mp3 :                                                                                 |"
+$V echo "|     - Links main_mp3.cpp to USER_MAIN_DIR.                                                |"
+$V echo "|  6. adc:                                                                                  |"
 $V echo "|     - Links main_adc.cpp to USER_MAIN_DIR.                                                |"
-$V echo "|  6. pwm:                                                                                  |"
+$V echo "|  7. pwm:                                                                                  |"
 $V echo "|     - Links main_adc.pwm to USER_MAIN_DIR.                                                |"
-$V echo "|  7. spi:                                                                                  |"
+$V echo "|  8. spi:                                                                                  |"
 $V echo "|     - Links main_spi.cpp to USER_MAIN_DIR.                                                |"
-$V echo "|  8. gpio:                                                                                 |"
+$V echo "|  9. gpio:                                                                                 |"
 $V echo "|     - Links main_gpio.cpp to USER_MAIN_DIR.                                               |"
-$V echo "|  9. eint:                                                                                 |"
+$V echo "|  10. eint:                                                                                |"
 $V echo "|     - Links main_eint.cpp to USER_MAIN_DIR.                                               |"
-$V echo "|  10. uart:                                                                                |"
+$V echo "|  11. uart:                                                                                |"
 $V echo "|     - Links main_uart.cpp to USER_MAIN_DIR.                                               |"
-$V echo "|  11. i2c:                                                                                 |"
+$V echo "|  12. i2c:                                                                                 |"
 $V echo "|     - Links main_i2c.cpp to USER_MAIN_DIR.                                                |"
-$V echo "|  12. watchdog:                                                                            |"
+$V echo "|  13. watchdog:                                                                            |"
 $V echo "|     - Links main_watchdog.cpp to USER_MAIN_DIR                                            |"
-$V echo "|  13. producer_consumer:                                                                   |"
+$V echo "|  14. producer_consumer:                                                                   |"
 $V echo "|     - Links main_producer_consumer.cpp to USER_MAIN_DIR                                   |"
-$V echo "|  14. delete_main:                                                                         |"
+$V echo "|  15. delete_main:                                                                         |"
 $V echo "|     - Deletes any links to USER_MAIN_DIR.                                                 |"
-$V echo "|  15. test:                                                                                |"
+$V echo "|  16. test:                                                                                |"
 $V echo "|     - Prints the values of USER_DRIVER_DIR & USER_MAIN_DIR from rules.sh file.            |"
 $V echo "|                                                                                           |"
 $V echo "|  For further information reference the README.md file located in this project.            |"
