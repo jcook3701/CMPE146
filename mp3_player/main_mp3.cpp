@@ -11,13 +11,7 @@
 #include "spiDriver.hpp"
 using namespace std;
 
-#define HIGH true
-#define LOW false
-
 SemaphoreHandle_t button_press_semaphore = NULL;
-/* global variabless */
-bool button_push_flag0 = false;
-bool button_push_flag1 = false;
 
 void vControlLED( void * pvParameters )
 {
@@ -82,7 +76,7 @@ void vReadSwitch( void * pvParameters )
         button_state = myGPIO_1_9->getLevel(); //Reading the input pin.
         // compare the buttonState to its previous state
         if(button_state != last_button_state){
-            if(button_state == LOW) {
+            if(button_state == false) {
                 button_push_counter++;
                 *package->globalVar = true;
                 //      button_push_flag = true;
