@@ -264,8 +264,8 @@ int main(int argc, char const *argv[])
     xTaskCreate(task_sig_reader, "sig_reader", STACK_SIZE, (void *)spi_package, 1 | portPRIVILEGE_BIT, NULL );
     xTaskCreate(task_page_reader, "page_reader", STACK_SIZE, (void *)spi_package, 1 | portPRIVILEGE_BIT, NULL );
     
-    xTaskCreate(vReadSwitch, "SW", STACK_SIZE, (void *)vRead_Switch_package0, 1, NULL);
-    xTaskCreate(vControlLED, "LED", STACK_SIZE, (void *)vControl_LED_package0, 1, NULL);
+    //xTaskCreate(vReadSwitch, "SW", STACK_SIZE, (void *)vRead_Switch_package0, 1, NULL);
+    //xTaskCreate(vControlLED, "LED", STACK_SIZE, (void *)vControl_LED_package0, 1, NULL);
     
     
     /* Start Scheduler - This will not return, and your tasks will start to run their while(1) loop */

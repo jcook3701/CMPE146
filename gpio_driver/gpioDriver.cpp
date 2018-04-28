@@ -30,3 +30,4 @@ void LabGPIO::setHigh(void)             { *(this->FIOPIN) |= (1 << this->pin);  
 void LabGPIO::setLow(void)              { *(this->FIOPIN) &= ~(1 << this->pin);                   }
 void LabGPIO::set(bool high)            { high-true? setHigh() : setLow();                        }
 bool LabGPIO::getLevel(void)            { return *(this->FIOPIN) & (1 << this->pin)? true: false; }
+LabGPIO::~LabGPIO() {};
