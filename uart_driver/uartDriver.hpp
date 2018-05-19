@@ -14,16 +14,20 @@ class LabUART
 {
 private:
   LPC_UART_TypeDef* UART;
+   unsigned int mPeripheralClock; 
 public:
-    LabUART();
-    ~LabUART();
+  LabUART();
+  ~LabUART();
   
-    // TODO: Fill in methods for init(), transmit(), receive() etc.
-	bool init(Peripheral peripheral);
-	void transmit(char c);
-	char receive(void);
+  // TODO: Fill in methods for init(), transmit(), receive() etc.
+  //  bool init(Peripheral peripheral);
+  bool init(unsigned int pclk, Peripheral peripheral, unsigned int baudRate);
+  void setBaudRate(unsigned int baudRate);
+  void set_lcd_baudrate();
+  void transmit(char c);
+  char receive(void);
   
-    // Optional: For the adventurous types, you may inherit from "CharDev" class to get a lot of funcionality for free
+  // Optional: For the adventurous types, you may inherit from "CharDev" class to get a lot of funcionality for free
 };
 
 #endif

@@ -36,6 +36,7 @@ I2C_MAIN  := main_i2c.cpp
 PRODUCER_CONSUMER_MAIN := main_producer_consumer.cpp
 WATCHDOG_MAIN := main_watchdog.cpp
 MP3_MAIN := main_mp3.cpp
+MP3_LCD_TEST_MAIN := main_lcd_screen.cpp
 
 # Local Git Dirs
 ADC       := adc_driver
@@ -69,27 +70,29 @@ help:
 	$V echo "|     - Links preets main.cpp to USER_MAIN_DIR.                                             |"
 	$V echo "|  5. mp3 :                                                                                 |"
 	$V echo "|     - Links main_mp3.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  6. adc:                                                                                  |"
+	$V echo "|  6. mp3_lcd_screen :                                                                      |"
+	$V echo "|     - Links main_lcd_screen.cpp to USER_MAIN_DIR.                                         |"
+	$V echo "|  7. adc:                                                                                  |"
 	$V echo "|     - Links main_adc.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  7. pwm:                                                                                  |"
+	$V echo "|  8. pwm:                                                                                  |"
 	$V echo "|     - Links main_adc.pwm to USER_MAIN_DIR.                                                |"
-	$V echo "|  8. spi:                                                                                  |"
+	$V echo "|  9. spi:                                                                                  |"
 	$V echo "|     - Links main_spi.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  9. gpio:                                                                                 |"
+	$V echo "|  10. gpio:                                                                                |"
 	$V echo "|     - Links main_gpio.cpp to USER_MAIN_DIR.                                               |"
-	$V echo "|  10. eint:                                                                                |"
+	$V echo "|  11. eint:                                                                                |"
 	$V echo "|     - Links main_eint.cpp to USER_MAIN_DIR.                                               |"
-	$V echo "|  11. uart:                                                                                |"
+	$V echo "|  12. uart:                                                                                |"
 	$V echo "|     - Links main_uart.cpp to USER_MAIN_DIR.                                               |"
-	$V echo "|  12. i2c:                                                                                 |"
+	$V echo "|  13. i2c:                                                                                 |"
 	$V echo "|     - Links main_i2c.cpp to USER_MAIN_DIR.                                                |"
-	$V echo "|  13. watchdog:                                                                            |"
+	$V echo "|  14. watchdog:                                                                            |"
 	$V echo "|     - Links main_watchdog.cpp to USER_MAIN_DIR                                            |"
-	$V echo "|  14. producer_consumer:                                                                   |"
+	$V echo "|  15. producer_consumer:                                                                   |"
 	$V echo "|     - Links main_producer_consumer.cpp to USER_MAIN_DIR                                   |"
-	$V echo "|  15. delete_main:                                                                         |"
+	$V echo "|  16. delete_main:                                                                         |"
 	$V echo "|     - Deletes any links to USER_MAIN_DIR.                                                 |"
-	$V echo "|  16. test:                                                                                |"
+	$V echo "|  17. test:                                                                                |"
 	$V echo "|     - Prints the values of USER_DRIVER_DIR & USER_MAIN_DIR from rules.sh file.            |"
 	$V echo "|                                                                                           |"
 	$V echo "|  For further information reference the README.md file located in this project.            |"
@@ -165,6 +168,13 @@ ifeq ($(FILE_SET),0)
 endif
 	@echo "Bulinding link for main.cpp"
 	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(MP3)/$(MP3_MAIN) $(USER_MAIN_DIR)/$(MAIN))
+
+mp3_lcd_screen:
+ifeq ($(FILE_SET),0)
+	$(error Please set values in $(IMPORT_FILE) before continuing. If you do not have a $(IMPORT_FILE) please run the < make template > command and set its variables.)
+endif
+	@echo "Bulinding link for main.cpp"
+	$V [ -L "$(USER_MAIN_DIR)/$(MAIN)" ] || (ln -s $(PWD)/$(MP3)/$(MP3_LCD_TEST_MAIN) $(USER_MAIN_DIR)/$(MAIN))
 
 adc:
 ifeq ($(FILE_SET),0)
