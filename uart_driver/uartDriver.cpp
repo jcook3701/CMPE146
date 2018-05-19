@@ -2,7 +2,7 @@
 //#include "LPC17xx.h"
 #include "lpc_isr.h"
 
-LabUART::LabUART() {}
+ LabUART::LabUART() {}
 LabUART::~LabUART() {}
 
 void LabUART::setBaudRate(unsigned int baudRate)
