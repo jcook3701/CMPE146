@@ -5,8 +5,8 @@ Port/Pin | UART | Select Register | Function
 ---|------|-----------|----------|----
 1:0 | P0.0  | UART-3 Tx | PINSEL 0 | 10
 3:2 | P0.1  | UART-3 Rx | PINSEL 0 | 10
-| P2.0  | UART-1 Tx | PINSEL 4 | 10
-| P2.1  | UART-1 Rx | PINSEL 4 | 10
+1:0 | P2.0  | UART-1 Tx | PINSEL 4 | 10
+3:2 | P2.1  | UART-1 Rx | PINSEL 4 | 10
 17:16 | P2.8  | UART-2 Tx | PINSEL 4 | 10
 19:18 | P2.9  | UART-2 Rx | PINSEL 4 | 10
 25:24 | P4.28 | UART-3 Tx | PINSEL 9 | 11
